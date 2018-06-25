@@ -60,7 +60,6 @@ public class CreateCollections {
                 m.setFeatureMatrix(matrix1[j]);
                 trainingArrayList.add(m);
             }
-
             trainingCollection.add(randomElement);
             allCollections.remove(randomElement);
         }

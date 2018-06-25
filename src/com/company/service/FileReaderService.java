@@ -37,7 +37,13 @@ public class FileReaderService {
                     firstLine = true;
                     RecordData rd = createFeatureObject(matrix, lastRowName);
                     recordDataArrayList.add(rd);
+                    matrix = new double[16][64];
                     j = 0;
+                    for (int i = 1; i < recordArray.length; i++) {
+                        matrix[j][i - 1] = Double.valueOf(recordArray[i]);
+                    }
+                    lastRowName = recordArray[0];
+                    j++;
                 }
             }
         } finally {

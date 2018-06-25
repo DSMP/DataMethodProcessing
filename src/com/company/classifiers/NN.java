@@ -1,16 +1,18 @@
 package com.company.classifiers;
 
 import com.company.model.NNmodel;
+import com.company.model.RecordData;
+import com.company.service.CreateCollections;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class NN {
-    public double calculateTheDistanceForTheSample(ArrayList<Double> coordinatesOfSample,
-                                                   ArrayList<Double> featureList) {
+    public double calculateTheDistanceForTheSample(double[] coordinatesOfSample,
+                                                   double[] featureList) {
         double result = 0.0;
-        for (int i = 0; i < featureList.size(); i++) {
-            result += Math.pow(featureList.get(i) - coordinatesOfSample.get(i), 2);
+        for (int i = 0; i < featureList.length; i++) {
+            result += Math.pow(featureList[i] - coordinatesOfSample[i], 2);
         }
         return Math.sqrt(result);
     }
@@ -38,5 +40,19 @@ public class NN {
         for (Integer index : indexesOfArray) {
             System.out.println(listOfDistances.get(index).getFeature());
         }
+    }
+
+    public void testNN(ArrayList<RecordData> arrayList) {
+        CreateCollections createCollections = new CreateCollections();
+        createCollections.getCollection(arrayList);
+        for (int i = 0; i < createCollections.getTestCollection().size() - 1; i++) {
+            for (int j = 0; j < createCollections.getTrainingCollection().size() - 1; j++) {
+                double[][] matrix = createCollections.getTestCollection().get(j).getFeatureMatrix();
+//                for (int p = 0; p < matrix)
+//                    nn.calculateTheDistanceForTheSample(,)
+            }
+        }
+        createCollections.getTestCollection();
+        createCollections.getTrainingCollection();
     }
 }

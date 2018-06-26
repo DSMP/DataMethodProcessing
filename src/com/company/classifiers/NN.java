@@ -1,5 +1,6 @@
 package com.company.classifiers;
 
+import com.company.model.DataToTask3;
 import com.company.model.NNmodel;
 import com.company.model.RecordData;
 import com.company.service.CreateCollections;
@@ -25,14 +26,14 @@ public class NN {
         return listOfDistances.get(index).getFeature();
     }
 
-    public void sampleSelectionForTheClasskNN(ArrayList<NNmodel> listOfDistances, int n) {
+    public String sampleSelectionForTheClasskNN(ArrayList<NNmodel> listOfDistances, int n) {
+        ArrayList<Integer> indexesOfArray = new ArrayList<>();
+        ArrayList<Double> distances = new ArrayList<>();
+        ArrayList<String> featureNames = new ArrayList<>();
         int i = 0;
-        ArrayList<Double> distances = new ArrayList<Double>();
         for (NNmodel listOfDistance : listOfDistances) {
             distances.add(listOfDistance.getDistance());
         }
-
-        ArrayList<Integer> indexesOfArray = new ArrayList<Integer>();
 
         while (i < n) {
             int minIndex = distances.indexOf(Collections.min(distances));
@@ -42,32 +43,57 @@ public class NN {
         }
 
         for (Integer index : indexesOfArray) {
-            System.out.println(listOfDistances.get(index).getFeature());
+            featureNames.add(listOfDistances.get(index).getFeature());
         }
+        return getMostFrequentElement(featureNames);
     }
 
-    public void testNN(ArrayList<RecordData> arrayList) {
+    public String getMostFrequentElement(ArrayList<String> featureNames) {
+        String element = null;
+        int count = 0;
+        for (int i = 0; i < featureNames.size(); i++) {
+            String tempElement = featureNames.get(i);
+            int tempCount = 0;
+            for (int j = 0; j < featureNames.size(); j++) {
+                if (featureNames.get(j).equals(tempElement)) {
+                    tempCount++;
+                }
+            }
+            if (tempCount > count) {
+                element = tempElement;
+                count = tempCount;
+            }
+        }
+        return element;
+    }
+
+    public void testClassNN(ArrayList<RecordData> arrayList) {
         CreateCollections createCollections = new CreateCollections();
         createCollections.getCollection(arrayList);
         createCollections.createArrayWithRecords();
         createCollections.createArrayWithRecordsTraining();
         createCollections.createArrayWithRecordsTest();
+        testNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
+        testKNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest(), 5);
+    }
+
+    public void testNN(ArrayList<DataToTask3> arrayListTraining, ArrayList<DataToTask3> arrayListTest) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();
-        for (int i = 0; i < createCollections.getArrayListTraining().size() - 1; i++) {
-            for (int j = 0; j < createCollections.getArrayListTest().size() - 1; j++) {
+        for (int i = 0; i < arrayListTraining.size() - 1; i++) {
+            for (int j = 0; j < arrayListTest.size() - 1; j++) {
                 double distance = calculateTheDistanceForTheSample(
-                        createCollections.getArrayListTraining().get(i).getFeatureMatrix(),
-                        createCollections.getArrayListTest().get(j).getFeatureMatrix());
-                distancesSamples.add(new NNmodel(distance, createCollections.getArrayListTest().get(j).getFeatureName()));
+                        arrayListTraining.get(i).getFeatureMatrix(),
+                        arrayListTest.get(j).getFeatureMatrix());
+                distancesSamples.add(new NNmodel(distance, arrayListTest.get(j).getFeatureName()));
             }
 
-            if (sampleSelectionForTheClassNN(distancesSamples).equals(createCollections.getArrayListTraining().get(i).getFeatureName())) {
-                trueArray.add(sampleSelectionForTheClassNN(distancesSamples).equals(createCollections.getArrayListTraining().get(i).getFeatureName()));
-                array.add(sampleSelectionForTheClassNN(distancesSamples).equals(createCollections.getArrayListTraining().get(i).getFeatureName()));
+            if (sampleSelectionForTheClassNN(distancesSamples).equals(arrayListTraining.get(i).getFeatureName())) {
+                trueArray.add(sampleSelectionForTheClassNN(distancesSamples).equals(arrayListTraining.get(i).getFeatureName()));
+                array.add(sampleSelectionForTheClassNN(distancesSamples).equals(arrayListTraining.get(i).getFeatureName()));
             } else {
-                array.add(sampleSelectionForTheClassNN(distancesSamples).equals(createCollections.getArrayListTraining().get(i).getFeatureName()));
+                array.add(sampleSelectionForTheClassNN(distancesSamples).equals(arrayListTraining.get(i).getFeatureName()));
             }
 
             distancesSamples.clear();
@@ -76,5 +102,32 @@ public class NN {
         Integer b = array.size();
         float procent = a.floatValue() / b.floatValue();
         System.out.println("Wynik dla NN: " + procent * 100 + "%");
+    }
+
+    public void testKNN(ArrayList<DataToTask3> arrayListTraining, ArrayList<DataToTask3> arrayListTest, int n) {
+        ArrayList<NNmodel> distancesSamples = new ArrayList<>();
+        ArrayList<Boolean> trueArray = new ArrayList<>();
+        ArrayList<Boolean> array = new ArrayList<>();
+        for (int i = 0; i < arrayListTraining.size() - 1; i++) {
+            for (int j = 0; j < arrayListTest.size() - 1; j++) {
+                double distance = calculateTheDistanceForTheSample(
+                        arrayListTraining.get(i).getFeatureMatrix(),
+                        arrayListTest.get(j).getFeatureMatrix());
+                distancesSamples.add(new NNmodel(distance, arrayListTest.get(j).getFeatureName()));
+            }
+
+            if (sampleSelectionForTheClasskNN(distancesSamples, n).equals(arrayListTraining.get(i).getFeatureName())) {
+                trueArray.add(sampleSelectionForTheClasskNN(distancesSamples, n).equals(arrayListTraining.get(i).getFeatureName()));
+                array.add(sampleSelectionForTheClasskNN(distancesSamples, n).equals(arrayListTraining.get(i).getFeatureName()));
+            } else {
+                array.add(sampleSelectionForTheClasskNN(distancesSamples, n).equals(arrayListTraining.get(i).getFeatureName()));
+            }
+
+            distancesSamples.clear();
+        }
+        Integer a = trueArray.size();
+        Integer b = array.size();
+        float procent = a.floatValue() / b.floatValue();
+        System.out.println("Wynik dla k-NN: " + procent * 100 + "%");
     }
 }

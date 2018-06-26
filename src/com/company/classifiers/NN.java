@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class NN {
-    public double calculateTheDistanceForTheSample(double[] coordinatesOfSample, double[] featureList) {
+    private double calculateTheDistanceForTheSample(double[] coordinatesOfSample, double[] featureList) {
         double result = 0.0;
         for (int i = 0; i < featureList.length; i++) {
             result += Math.pow(featureList[i] - coordinatesOfSample[i], 2);
@@ -17,7 +17,7 @@ public class NN {
         return Math.sqrt(result);
     }
 
-    public String sampleSelectionForTheClassNN(ArrayList<NNmodel> listOfDistances) {
+    private String sampleSelectionForTheClassNN(ArrayList<NNmodel> listOfDistances) {
         ArrayList<Double> listOfDistancesDoubles = new ArrayList<>();
         for (NNmodel n : listOfDistances) {
             listOfDistancesDoubles.add(n.getDistance());
@@ -26,7 +26,7 @@ public class NN {
         return listOfDistances.get(index).getFeature();
     }
 
-    public String sampleSelectionForTheClasskNN(ArrayList<NNmodel> listOfDistances, int n) {
+    private String sampleSelectionForTheClasskNN(ArrayList<NNmodel> listOfDistances, int n) {
         ArrayList<Integer> indexesOfArray = new ArrayList<>();
         ArrayList<Double> distances = new ArrayList<>();
         ArrayList<String> featureNames = new ArrayList<>();
@@ -48,14 +48,14 @@ public class NN {
         return getMostFrequentElement(featureNames);
     }
 
-    public String getMostFrequentElement(ArrayList<String> featureNames) {
+    private String getMostFrequentElement(ArrayList<String> featureNames) {
         String element = null;
         int count = 0;
         for (int i = 0; i < featureNames.size(); i++) {
             String tempElement = featureNames.get(i);
             int tempCount = 0;
-            for (int j = 0; j < featureNames.size(); j++) {
-                if (featureNames.get(j).equals(tempElement)) {
+            for (String featureName : featureNames) {
+                if (featureName.equals(tempElement)) {
                     tempCount++;
                 }
             }
@@ -68,16 +68,17 @@ public class NN {
     }
 
     public void testClassNN(ArrayList<RecordData> arrayList) {
+        System.out.println("\n\n+++++++++++Zadanie 3+++++++++++");
         CreateCollections createCollections = new CreateCollections();
         createCollections.getCollection(arrayList);
         createCollections.createArrayWithRecords();
         createCollections.createArrayWithRecordsTraining();
         createCollections.createArrayWithRecordsTest();
         testNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
-        testKNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest(), 5);
+        testKNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest(), 1);
     }
 
-    public void testNN(ArrayList<DataToTask3> arrayListTraining, ArrayList<DataToTask3> arrayListTest) {
+    private void testNN(ArrayList<DataToTask3> arrayListTraining, ArrayList<DataToTask3> arrayListTest) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();
@@ -104,7 +105,7 @@ public class NN {
         System.out.println("Wynik dla NN: " + procent * 100 + "%");
     }
 
-    public void testKNN(ArrayList<DataToTask3> arrayListTraining, ArrayList<DataToTask3> arrayListTest, int n) {
+    private void testKNN(ArrayList<DataToTask3> arrayListTraining, ArrayList<DataToTask3> arrayListTest, int n) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();

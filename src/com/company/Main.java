@@ -1,7 +1,6 @@
 package com.company;
 
 import com.company.classifiers.NN;
-import com.company.service.CreateCollections;
 import com.company.service.FileReaderService;
 import com.company.service.FisherMethod;
 
@@ -18,7 +17,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        fisherMethod.testFisher(fileReaderService.getRecordDataArrayList().get(1).getFeatureMatrix(), fileReaderService.getRecordDataArrayList().get(44).getFeatureMatrix(), 4);
         nn.testClassNN(fileReaderService.getRecordDataArrayList());
-        //fisherMethod.testFisher(fileReaderService.getRecordDataArrayList().get(1).getFeatureMatrix(), fileReaderService.getRecordDataArrayList().get(44).getFeatureMatrix());
     }
 }

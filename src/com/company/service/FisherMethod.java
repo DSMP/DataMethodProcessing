@@ -47,6 +47,7 @@ public class FisherMethod {
         ArrayList<Double> sForMatrixB = new ArrayList<>();
         ArrayList<Double> fisherValues = new ArrayList<>();
         System.out.println("+++++++++++Zadanie 1+++++++++++");
+        System.out.println("Liczba wybranych cech: " + numberOfFeatures);
         System.out.println("\n++Oblicz wartosci S++");
         for (int i = 0; i < numberOfFeatures; i++) {
             System.out.println("Sa" + i + ": " + calculateS(matrixA[numberOfFeatures], vectorA[i]));

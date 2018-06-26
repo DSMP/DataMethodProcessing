@@ -1,8 +1,8 @@
 package com.company.classifiers;
 
 import com.company.model.DataToTask3Model;
-import com.company.model.NNmodel;
 import com.company.model.FeatureModel;
+import com.company.model.NNmodel;
 import com.company.service.CreateCollections;
 
 import java.util.ArrayList;
@@ -68,14 +68,14 @@ public class NN {
     }
 
     public void testClassNN(ArrayList<FeatureModel> arrayList) {
-        System.out.println("\n\n+++++++++++Zadanie 3+++++++++++");
+        System.out.println("\n+++++++++++Zadanie 3+++++++++++");
         CreateCollections createCollections = new CreateCollections();
         createCollections.getCollection(arrayList);
         createCollections.createArrayWithRecords();
         createCollections.createArrayWithRecordsTraining();
         createCollections.createArrayWithRecordsTest();
         testNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
-        testKNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest(), 1);
+        testKNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest(), 4);
     }
 
     private void testNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
@@ -129,6 +129,6 @@ public class NN {
         Integer a = trueArray.size();
         Integer b = array.size();
         float procent = a.floatValue() / b.floatValue();
-        System.out.println("Wynik dla k-NN: " + procent * 100 + "%");
+        System.out.println("Wynik dla k-NN, gdzie k = " + n + " : " + procent * 100 + "%");
     }
 }

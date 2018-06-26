@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.model.RecordData;
+import com.company.model.FeatureModel;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FileReaderService {
-    private ArrayList<RecordData> recordDataArrayList = new ArrayList<RecordData>();
+    private ArrayList<FeatureModel> featureModelArrayList = new ArrayList<FeatureModel>();
 
     public void readFile() throws IOException {
         String lastRowName = null;
@@ -35,8 +35,8 @@ public class FileReaderService {
                     j++;
                 } else {
                     firstLine = true;
-                    RecordData rd = createFeatureObject(matrix, lastRowName);
-                    recordDataArrayList.add(rd);
+                    FeatureModel rd = createFeatureObject(matrix, lastRowName);
+                    featureModelArrayList.add(rd);
                     matrix = new double[16][64];
                     j = 0;
                     for (int i = 1; i < recordArray.length; i++) {
@@ -51,19 +51,11 @@ public class FileReaderService {
         }
     }
 
-    private RecordData createFeatureObject(double[][] featureMatrix, String objectName) {
-        return new RecordData(objectName, featureMatrix);
+    private FeatureModel createFeatureObject(double[][] featureMatrix, String objectName) {
+        return new FeatureModel(objectName, featureMatrix);
     }
 
-    public ArrayList<RecordData> getRecordDataArrayList() {
-        return recordDataArrayList;
-    }
-
-    public ArrayList<String> getFeatureName() {
-        ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < recordDataArrayList.size(); i++) {
-            list.add(recordDataArrayList.get(i).getFeatureName());
-        }
-        return list;
+    public ArrayList<FeatureModel> getFeatureModelArrayList() {
+        return featureModelArrayList;
     }
 }

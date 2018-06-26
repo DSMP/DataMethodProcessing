@@ -1,10 +1,13 @@
 package com.company.model;
 
-public class RecordData {
+public class DataToTask3Model {
     private String featureName;
-    private double[][] featureMatrix;
+    private double[] featureMatrix;
 
-    public RecordData(String featureName, double[][] featureMatrix) {
+    public DataToTask3Model() {
+    }
+
+    public DataToTask3Model(String featureName, double[] featureMatrix) {
         this.featureName = featureName;
         this.featureMatrix = featureMatrix;
     }
@@ -17,11 +20,11 @@ public class RecordData {
         this.featureName = featureName;
     }
 
-    public double[][] getFeatureMatrix() {
+    public double[] getFeatureMatrix() {
         return featureMatrix;
     }
 
-    public void setFeatureMatrix(double[][] featureMatrix) {
+    public void setFeatureMatrix(double[] featureMatrix) {
         this.featureMatrix = featureMatrix;
     }
 }

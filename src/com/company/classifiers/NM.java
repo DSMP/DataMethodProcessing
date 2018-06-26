@@ -1,6 +1,6 @@
 package com.company.classifiers;
 
-import com.company.model.DataToTask3;
+import com.company.model.DataToTask3Model;
 import com.company.model.NNmodel;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class NM {
         return listOfDistances.get(index).getFeature();
     }
 
-    public void textNM(ArrayList<DataToTask3> arrayListTraining, ArrayList<DataToTask3> arrayListTest) {
+    public void textNM(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();

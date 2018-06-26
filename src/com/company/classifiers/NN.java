@@ -1,8 +1,8 @@
 package com.company.classifiers;
 
-import com.company.model.DataToTask3;
+import com.company.model.DataToTask3Model;
 import com.company.model.NNmodel;
-import com.company.model.RecordData;
+import com.company.model.FeatureModel;
 import com.company.service.CreateCollections;
 
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class NN {
         return element;
     }
 
-    public void testClassNN(ArrayList<RecordData> arrayList) {
+    public void testClassNN(ArrayList<FeatureModel> arrayList) {
         System.out.println("\n\n+++++++++++Zadanie 3+++++++++++");
         CreateCollections createCollections = new CreateCollections();
         createCollections.getCollection(arrayList);
@@ -78,7 +78,7 @@ public class NN {
         testKNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest(), 1);
     }
 
-    private void testNN(ArrayList<DataToTask3> arrayListTraining, ArrayList<DataToTask3> arrayListTest) {
+    private void testNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();
@@ -105,7 +105,7 @@ public class NN {
         System.out.println("Wynik dla NN: " + procent * 100 + "%");
     }
 
-    private void testKNN(ArrayList<DataToTask3> arrayListTraining, ArrayList<DataToTask3> arrayListTest, int n) {
+    private void testKNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest, int n) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();

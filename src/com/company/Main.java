@@ -17,7 +17,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        fisherMethod.testFisher(fileReaderService.getRecordDataArrayList().get(1).getFeatureMatrix(), fileReaderService.getRecordDataArrayList().get(44).getFeatureMatrix(), 4);
-        nn.testClassNN(fileReaderService.getRecordDataArrayList());
+        fisherMethod.testFisher(fileReaderService.getFeatureModelArrayList().get(1).getFeatureMatrix(), fileReaderService.getFeatureModelArrayList().get(44).getFeatureMatrix(), 7);
+        nn.testClassNN(fileReaderService.getFeatureModelArrayList());
     }
 }

@@ -8,8 +8,8 @@ public class FisherMethod {
         double[] vector = new double[numberOfFeatures];
         for (int i = 0; i < numberOfFeatures; i++) {
             double result = 0;
-            for (int j = 0; j < matrix.length; j++) {
-                result += matrix[j][i];
+            for (double[] aMatrix : matrix) {
+                result += aMatrix[i];
             }
             vector[i] = result / numberOfFeatures;
         }

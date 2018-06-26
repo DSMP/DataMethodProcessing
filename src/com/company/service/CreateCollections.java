@@ -4,25 +4,71 @@ import com.company.model.DataToTask3;
 import com.company.model.RecordData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class CreateCollections {
     private ArrayList<RecordData> allCollections;
     private ArrayList<DataToTask3> testArrayList;
     private ArrayList<DataToTask3> trainingArrayList;
+    private ArrayList<DataToTask3> arrayList;
+    private ArrayList<DataToTask3> arrayListTest;
+    private ArrayList<DataToTask3> arrayListTraining;
 
-    public ArrayList<DataToTask3> getTestArrayList() {
-        return testArrayList;
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //+++++++++++++++++++++++++TRAINING AND TEST COLLECTIONS++++++++++++++++++++++++++++++++++
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    public ArrayList<DataToTask3> getArrayListTest() {
+        return arrayListTest;
     }
 
-    public ArrayList<DataToTask3> getTrainingArrayList() {
-        return trainingArrayList;
+    public ArrayList<DataToTask3> getArrayListTraining() {
+        return arrayListTraining;
+    }
+
+    public ArrayList<DataToTask3> getArrayList() {
+        return arrayList;
     }
 
     public void getCollection(ArrayList<RecordData> allCollections) {
         this.allCollections = allCollections;
     }
+
+    public void createArrayWithRecords() {
+        arrayList = new ArrayList<>();
+        for (RecordData recordData : allCollections) {
+            for (int j = 0; j < recordData.getFeatureMatrix().length; j++) {
+                arrayList.add(new DataToTask3(recordData.getFeatureName(), recordData.getFeatureMatrix()[j]));
+            }
+        }
+    }
+
+    public void createArrayWithRecordsTraining() {
+        Double sizeCollDouble = arrayList.size() * 0.2;
+        Random rand = new Random();
+        arrayListTraining = new ArrayList<>();
+        for (int i = 0; i < sizeCollDouble.intValue(); i++) {
+            DataToTask3 dataToTask3 = arrayList.get(rand.nextInt(arrayList.size()));
+            arrayListTraining.add(dataToTask3);
+            arrayList.remove(dataToTask3);
+        }
+    }
+
+    public void createArrayWithRecordsTest() {
+        Random rand = new Random();
+        arrayListTest = new ArrayList<>();
+        int arraySize = arrayList.size();
+        for (int i = 0; i < arraySize; i++) {
+            DataToTask3 dataToTask3 = arrayList.get(rand.nextInt(arrayList.size()));
+            arrayListTest.add(dataToTask3);
+            arrayList.remove(dataToTask3);
+        }
+    }
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
     public ArrayList<RecordData> getTestCollection() {
         ArrayList<RecordData> testCollection = new ArrayList<>();
@@ -64,5 +110,13 @@ public class CreateCollections {
             allCollections.remove(randomElement);
         }
         return trainingCollection;
+    }
+
+    public ArrayList<DataToTask3> getTestArrayList() {
+        return testArrayList;
+    }
+
+    public ArrayList<DataToTask3> getTrainingArrayList() {
+        return trainingArrayList;
     }
 }

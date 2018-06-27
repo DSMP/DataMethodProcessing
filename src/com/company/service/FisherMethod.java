@@ -60,7 +60,7 @@ public class FisherMethod {
         ArrayList<Double> fisherValues = new ArrayList<>();
 
         System.out.println("+++++++++++Zadanie 1+++++++++++");
-        System.out.println("Liczba wybranych cech: " + numberOfFeatures);
+        System.out.println("Liczba wybranych cech: " + howManyTheBestResults);
         for (int i = 0; i < numberOfFeatures; i++) {
             for (int j = 0; j < 16; j++) {
                 double[] m = getColumn(matrixA, i);
@@ -85,16 +85,16 @@ public class FisherMethod {
         ArrayList<Double> fisherValuesClone = new ArrayList<>(fisherValues);
         ArrayList<Integer> theBestResults = new ArrayList<>(selection(fisherValues, howManyTheBestResults));
         fisherValues.clear();
-//        fisherValues = new ArrayList<>(fisherValuesClone);
 
-        for (int i = 0; i < theBestResults.size(); i++) {
-            fisherValues.add(fisherValuesClone.get(theBestResults.get(i)));
+        for (Integer theBestResult : theBestResults) {
+            fisherValues.add(fisherValuesClone.get(theBestResult));
         }
+
         Collections.sort(fisherValues);
         Collections.reverse(fisherValues);
 
         for (int i = 0; i < fisherValues.size(); i++) {
-            System.out.println(i + " - wartość: " + fisherValues.get(i));
+            System.out.println((i + 1) + " - wartość: " + fisherValues.get(i));
         }
 
     }

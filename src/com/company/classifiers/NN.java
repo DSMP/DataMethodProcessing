@@ -76,9 +76,9 @@ public class NN {
         createCollections.createArrayWithRecordsTraining();
         createCollections.createArrayWithRecordsTest();
         testNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
-        testKNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest(), 1);
+        testKNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest(), 4);
         nm.testNM(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
-    }
+}
 
     private void testNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();

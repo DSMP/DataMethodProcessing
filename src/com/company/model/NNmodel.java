@@ -13,15 +13,7 @@ public class NNmodel {
         return distance;
     }
 
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
     public String getFeature() {
         return feature;
-    }
-
-    public void setFeature(String feature) {
-        this.feature = feature;
     }
 }

@@ -4,40 +4,34 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class FisherMethod {
-    public double[] calculateVector(double[][] matrix) {
-        double[] vector = new double[matrix[0].length];
-        for (int i = 0; i < matrix[0].length - 1; i++) {
+    private double[] calculateVector(double[][] matrix, int numberOfFeatures) {
+        double[] vector = new double[numberOfFeatures];
+        for (int i = 0; i < numberOfFeatures; i++) {
             double result = 0;
-            for (int j = 0; j < matrix.length; j++) {
-                result += matrix[j][i];
+            for (double[] aMatrix : matrix) {
+                result += aMatrix[i];
             }
-            vector[i] = result / matrix[0].length;
+            vector[i] = result / numberOfFeatures;
         }
         return vector;
     }
 
-    public ArrayList<Double> calculateS(double[][] matrix, double[] vectorValue) {
-        ArrayList<Double> listOfS = new ArrayList<Double>();
-        for (int i = 0; i < matrix[0].length; i++) {
-            double result = 0;
-            for (int j = 0; j < matrix.length; j++) {
-                result += Math.pow(matrix[j][i] - vectorValue[j], 2);
-            }
-            result = Math.sqrt(result / matrix[0].length);
-            listOfS.add(result);
+    private double calculateS(double[] column, double vectorValue) {
+        double result = 0;
+        for (double aColumn : column) {
+            result += Math.pow(aColumn - vectorValue, 2);
         }
-        return listOfS;
+        return Math.sqrt(result / column.length);
     }
 
-    public double calculateFisher(double vectorA, double vectorB, double valueSA, double valueSB) {
+    private double calculateFisher(double vectorA, double vectorB, double valueSA, double valueSB) {
         return Math.abs(vectorA - vectorB) / valueSA + valueSB;
     }
 
-    public int selection(ArrayList<Double> fisherValue) {
+    private int selection(ArrayList<Double> fisherValue) {
         int i = 0;
-        System.out.println(Collections.max(fisherValue));
         for (Double v : fisherValue) {
-            if(!v.isNaN()) {
+            if (!v.isNaN()) {
                 if (v.equals(Collections.max(fisherValue))) {
                     i = fisherValue.indexOf(v);
                 }
@@ -46,19 +40,33 @@ public class FisherMethod {
         return i;
     }
 
-    public void testFisher(double[][] matrixA,  double[][] matrixB) {
-        double[] vectorA = calculateVector(matrixA);
-        double[] vectorB = calculateVector(matrixB);
-        ArrayList<Double> sListA =  calculateS(matrixA, vectorA);
-        System.out.println(sListA.size());
-        ArrayList<Double> sListB =  calculateS(matrixB, vectorB);
-        System.out.println(sListB.size());
-        ArrayList<Double> fisherValue = new ArrayList<Double>();
-        for(int i = 0 ; i < sListB.size(); i++) {
-            fisherValue.add(calculateFisher(sListA.get(i), sListB.get(i), vectorA[i], vectorB[i]));
-//            System.out.println(calculateFisher(sListA.get(i), sListB.get(i), vectorA[i], vectorB[i]));
+    public void testFisher(double[][] matrixA, double[][] matrixB, int numberOfFeatures) {
+        double[] vectorA = calculateVector(matrixA, numberOfFeatures);
+        double[] vectorB = calculateVector(matrixB, numberOfFeatures);
+        ArrayList<Double> sForMatrixA = new ArrayList<>();
+        ArrayList<Double> sForMatrixB = new ArrayList<>();
+        ArrayList<Double> fisherValues = new ArrayList<>();
+        System.out.println("+++++++++++Zadanie 1+++++++++++");
+        System.out.println("Liczba wybranych cech: " + numberOfFeatures);
+        System.out.println("\n++Oblicz wartosci S++");
+        for (int i = 0; i < numberOfFeatures; i++) {
+            System.out.println("Sa" + i + ": " + calculateS(matrixA[numberOfFeatures], vectorA[i]));
+            sForMatrixA.add(calculateS(matrixA[numberOfFeatures], vectorA[i]));
         }
-        fisherValue.get(selection(fisherValue));
-//        System.out.println(fisherValue.get(selection(fisherValue)));
+        System.out.println();
+        for (int i = 0; i < numberOfFeatures; i++) {
+            System.out.println("Sb" + i + ": " + calculateS(matrixB[numberOfFeatures], vectorB[i]));
+            sForMatrixB.add(calculateS(matrixB[numberOfFeatures], vectorB[i]));
+        }
+
+        System.out.println("\n++Oblicz Fishera++");
+
+        for (int i = 0; i < numberOfFeatures; i++) {
+            System.out.println("F" + i + ": " + calculateFisher(vectorA[i], vectorB[i], sForMatrixA.get(i), sForMatrixB.get(i)));
+            fisherValues.add(calculateFisher(vectorA[i], vectorB[i], sForMatrixA.get(i), sForMatrixB.get(i)));
+        }
+
+        System.out.println("\nNajwiększa wartość: " + fisherValues.get(selection(fisherValues)));
+        System.out.println("Indeks: " + selection(fisherValues));
     }
 }

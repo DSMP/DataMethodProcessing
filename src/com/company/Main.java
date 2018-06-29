@@ -18,8 +18,8 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        fisherMethod.testFisher(fileReaderService.getFeatureModelArrayList().get(0).getFeatureMatrix(), fileReaderService.getFeatureModelArrayList().get(44).getFeatureMatrix(), 64, 21);
 
-        fisherMethod.testFisher(fileReaderService.getFeatureModelArrayList().get(1).getFeatureMatrix(), fileReaderService.getFeatureModelArrayList().get(44).getFeatureMatrix(), 7);
         nn.testClassNN(fileReaderService.getFeatureModelArrayList());
 
     }

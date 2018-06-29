@@ -12,14 +12,14 @@ public class NM {
         for (int i = 0; i < featureList.length; i++) {
             result += featureList[i];
         }
-        return result/featureList.length;
+        return result / featureList.length;
     }
 
-    public double calculateTheDistanceForTheSample(double vector,
+    public double calculateTheDistanceForTheSample(double[] vector,
                                                    double[] coordinatesOfSample) {
         double result = 0.0;
         for (int i = 0; i < coordinatesOfSample.length; i++) {
-            result += Math.pow(coordinatesOfSample[i] - vector, 2);
+            result += Math.pow(coordinatesOfSample[i] - vector[i], 2);
         }
         return Math.sqrt(result);
     }
@@ -33,9 +33,29 @@ public class NM {
         return listOfDistances.get(index).getFeature();
     }
 
-    public void textNM(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
+    public void testNM(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();
+
+        for (int i = 0; i < arrayListTraining.size() - 1; i++) {
+            for (int j = 0; j < arrayListTest.size() - 1; j++) {
+                double distance = calculateTheDistanceForTheSample(arrayListTraining.get(i).getFeatureMatrix(),
+                        arrayListTest.get(j).getFeatureMatrix());
+                distancesSamples.add(new NNmodel(distance, arrayListTest.get(j).getFeatureName()));
+            }
+            if (sampleSelectionForTheClassNM(distancesSamples).equals(arrayListTraining.get(i).getFeatureName())) {
+                trueArray.add(sampleSelectionForTheClassNM(distancesSamples).equals(arrayListTraining.get(i).getFeatureName()));
+                array.add(sampleSelectionForTheClassNM(distancesSamples).equals(arrayListTraining.get(i).getFeatureName()));
+            } else {
+                array.add(sampleSelectionForTheClassNM(distancesSamples).equals(arrayListTraining.get(i).getFeatureName()));
+            }
+            distancesSamples.clear();
+        }
+
+        Integer a = trueArray.size();
+        Integer b = array.size();
+        float procent = a.floatValue() / b.floatValue();
+        System.out.println("Wynik dla NM: " + procent * 100 + "%");
     }
 }

@@ -68,6 +68,7 @@ public class NN {
     }
 
     public void testClassNN(ArrayList<FeatureModel> arrayList) {
+        NM nm = new NM();
         System.out.println("\n+++++++++++Zadanie 3+++++++++++");
         CreateCollections createCollections = new CreateCollections();
         createCollections.getCollection(arrayList);
@@ -76,7 +77,8 @@ public class NN {
         createCollections.createArrayWithRecordsTest();
         testNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
         testKNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest(), 4);
-    }
+        nm.testNM(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
+}
 
     private void testNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();

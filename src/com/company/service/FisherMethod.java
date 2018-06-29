@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class FisherMethod {
+    // policz srednią z wektoru
     private double[] calculateVector(double[][] matrix, int numberOfFeatures) {
         double[] vector = new double[numberOfFeatures];
         for (int i = 0; i < numberOfFeatures; i++) {

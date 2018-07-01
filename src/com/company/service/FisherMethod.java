@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class FisherMethod {
     // policz srednią z wektoru
-    private double[] calculateVector(double[][] matrix, int numberOfFeatures) {
+    public double[] calculateVector(double[][] matrix, int numberOfFeatures) {
         double[] vector = new double[numberOfFeatures];
         for (int i = 0; i < numberOfFeatures; i++) {
             double result = 0;
@@ -17,10 +17,10 @@ public class FisherMethod {
         return vector;
     }
 
-    private double calculateS(double[] column, double vectorValue) {
+    public double calculateS(double[] column, double avgOfColumn) {
         double result = 0;
         for (double aColumn : column) {
-            result += Math.pow(aColumn - vectorValue, 2);
+            result += Math.pow(aColumn - avgOfColumn, 2);
         }
         return Math.sqrt(result / column.length);
     }

@@ -28,15 +28,35 @@ public class SFS {
         data = fileReaderService.getFeatureModelArrayList();
     }
 
-    public void calculateSFS(int featureCount)
+    public double[] calculateSFS(int featureCount)
     {
         splitClasses();
-        MatrixClass MatrixAcer = generateMatrix(dataAcer);
-        MatrixClass MatrixQuercus = generateMatrix(dataQuercus);
+        MatrixClass matrixAcer = generateMatrix(dataAcer);
+        MatrixClass matrixQuercus = generateMatrix(dataQuercus);
+        double[] fisherDataCurrent = new double[0];
 
         for (int i = 0; i < featureCount; i++) {
-
+            double[] avgRowsMatrixAcer = fisherMethod.calculateVector(matrixAcer.getMatrix(),64);
+            double[] avgRowsMatrixQuercus = fisherMethod.calculateVector(matrixQuercus.getMatrix(),64);
+            fisherDataCurrent = new double[64];
+            for (int j = 0; j < 64; j++) {
+                fisherDataCurrent[j] = fisherMethod.calculateFisher(avgRowsMatrixAcer[j], avgRowsMatrixQuercus[j], fisherMethod.calculateS(matrixAcer.getMatrix()[j],avgRowsMatrixAcer[j]), fisherMethod.calculateS(matrixQuercus.getMatrix()[j],avgRowsMatrixQuercus[j]));
+            }
         }
+        fisherDataCurrent[0] = bestResult(fisherDataCurrent);
+        return fisherDataCurrent;
+    }
+
+    private double bestResult(double[] column)
+    {
+        double bestResult = -1;
+        for (double result :column) {
+            if (result > bestResult)
+            {
+                bestResult = result;
+            }
+        }
+        return bestResult;
     }
 
     private void splitClasses()

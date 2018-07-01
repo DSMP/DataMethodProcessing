@@ -23,7 +23,7 @@ public class Main {
 //        nn.testClassNN(fileReaderService.getFeatureModelArrayList());
 
         SFS sfs = new SFS();
-        sfs.calculateSFS(10);
+        double[] lol = sfs.calculateSFS(1);
 
     }
 }

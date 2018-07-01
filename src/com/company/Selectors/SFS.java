@@ -36,8 +36,8 @@ public class SFS {
         double[] fisherDataCurrent = new double[0];
 
         for (int i = 0; i < featureCount; i++) {
-            double[] avgRowsMatrixAcer = fisherMethod.calculateVector(matrixAcer.getMatrix(),64);
-            double[] avgRowsMatrixQuercus = fisherMethod.calculateVector(matrixQuercus.getMatrix(),64);
+            double[] avgRowsMatrixAcer = fisherMethod.calculateAvgVector(matrixAcer.getMatrix(),64);
+            double[] avgRowsMatrixQuercus = fisherMethod.calculateAvgVector(matrixQuercus.getMatrix(),64);
             fisherDataCurrent = new double[64];
             for (int j = 0; j < 64; j++) {
                 fisherDataCurrent[j] = fisherMethod.calculateFisher(avgRowsMatrixAcer[j], avgRowsMatrixQuercus[j], fisherMethod.calculateS(matrixAcer.getMatrix()[j],avgRowsMatrixAcer[j]), fisherMethod.calculateS(matrixQuercus.getMatrix()[j],avgRowsMatrixQuercus[j]));

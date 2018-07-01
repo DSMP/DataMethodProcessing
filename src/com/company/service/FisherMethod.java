@@ -25,8 +25,9 @@ public class FisherMethod {
         return Math.sqrt(result / column.length);
     }
 
-    private double calculateFisher(double vectorA, double vectorB, double valueSA, double valueSB) {
-        return Math.abs(vectorA - vectorB) / valueSA + valueSB;
+    //calculate Fisher, one feature
+    public double calculateFisher(double avarageA, double avarageB, double sigmaA, double sigmaB) {
+        return Math.abs(avarageA - avarageB) / sigmaA + sigmaB;
     }
 
     private ArrayList<Integer> selection(ArrayList<Double> fisherValue, int howManyTheBestResults) {

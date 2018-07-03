@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.Selectors.SFS;
 import com.company.classifiers.NN;
+import com.company.service.CovariantMatrixService;
 import com.company.service.FileReaderService;
 import com.company.service.FisherMethod;
 
@@ -22,8 +23,9 @@ public class Main {
 //
 //        nn.testClassNN(fileReaderService.getFeatureModelArrayList());
 
-        SFS sfs = new SFS();
-        double[] lol = sfs.calculateSFS(1);
-
+        //SFS sfs = new SFS();
+        //double[] lol = sfs.calculateSFS(1);
+        CovariantMatrixService a = new CovariantMatrixService();
+        double[][] hmmm = a.calcCovMatrix(new double[][]{{1,1},{2,1},{-1,0},{-1,-1}});
     }
 }

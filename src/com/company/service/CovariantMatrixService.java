@@ -6,26 +6,40 @@ public class CovariantMatrixService {
     public CovariantMatrixService() {
         this.fisherMethod = new FisherMethod();
     }
-    //todo: przetestuj
+
     public double[][] calcCovMatrix(final double[][] matrix)
     {
         double[] vectorAvg = fisherMethod.calculateAvgVector(matrix,matrix[0].length);
         double[][] matrixAvg = makeAvgVectorToMatrix(vectorAvg,matrix[0].length);
         double[][] matrixDiff = calcDiffMatrix(matrix, matrixAvg);
         double[][] matrixTrans = makeTransMatrix(matrix);
-        double[][] matrixResult = new double[matrix.length][matrix[0].length];
-        int newMatrixSize = Math.min(matrix.length,matrix[0].length);
-        int matrixLongerSize = Math.max(matrix.length,matrix[0].length);
-        for (int i = 0; i < newMatrixSize - 1; i++) {
-            for (int j = 0; j < newMatrixSize - 1; j++) {
-                double cell = 0;
-                for (int k = 0; k < matrixLongerSize - 1; k++) {
-                    cell += matrix[i][k] * matrix[k][i];
-                }
-                matrixResult[i][j] = cell;
+        double[][] matrixMul = multiply(matrixDiff,matrixTrans);
+        matrixMul = multiply(matrixMul,matrix[0].length);
+        return matrixMul;
+    }
+    private double[][] multiply(double[][] matrix, double scalar)
+    {
+        double[][] result = new double[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                result[i][j] = matrix[i][j] * scalar;
             }
         }
-        return matrixResult;
+        return result;
+    }
+
+    private double[][] multiply(double[][] a, double[][] b) {
+        int m1 = a.length;
+        int n1 = a[0].length;
+        int m2 = b.length;
+        int n2 = b[0].length;
+        if (n1 != m2) throw new RuntimeException("Illegal matrix dimensions.");
+        double[][] c = new double[m1][n2];
+        for (int i = 0; i < m1; i++)
+            for (int j = 0; j < n2; j++)
+                for (int k = 0; k < n1; k++)
+                    c[i][j] += a[i][k] * b[k][j];
+        return c;
     }
 
     private double[][] makeTransMatrix(final double[][] matrixSource)
@@ -52,9 +66,9 @@ public class CovariantMatrixService {
 
     private double[][] calcDiffMatrix(final double[][] matrixF, final double[][] matrixAvg)
     {
-        double[][] matrixResult= new double[matrixF.length][];
-        for (int i = 0; i < matrixF.length; i++) {
-            for (int j = 0; j < matrixF[0].length; j++) {
+        double[][] matrixResult= new double[matrixF.length][matrixF[0].length];
+        for (int i = 0; i < matrixF.length - 1; i++) {
+            for (int j = 0; j < matrixF[0].length - 1; j++) {
                 matrixResult[i][j] = matrixF[i][j] - matrixAvg[i][j];
             }
         }

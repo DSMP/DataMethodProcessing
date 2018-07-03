@@ -34,5 +34,6 @@ public class Main {
             System.out.println();
         }
         double[][] hmmm = a.calcCovMatrix(qwe);
+        double res = a.matrixDeterminant(hmmm);
     }
 }

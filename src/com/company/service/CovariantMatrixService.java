@@ -45,8 +45,8 @@ public class CovariantMatrixService {
     private double[][] makeTransMatrix(final double[][] matrixSource)
     {
         double[][] matrixResult = new double[matrixSource[0].length][matrixSource.length];
-        for (int i = 0; i < matrixSource.length-1; i++) {
-            for (int j = 0; j < matrixSource[0].length-1; j++) {
+        for (int i = 0; i < matrixSource.length; i++) {
+            for (int j = 0; j < matrixSource[0].length; j++) {
                 matrixResult[j][i] = matrixSource[i][j];
             }
         }
@@ -55,10 +55,10 @@ public class CovariantMatrixService {
 
     private double[][] makeAvgVectorToMatrix(final double[] avgVector, final int sizeY)
     {
-        double[][] matrixResult = new double[avgVector.length][sizeY];
-        for (int i = 0; i < avgVector.length; i++) {
-            for (int j = 0; j < sizeY; j++) {
-                matrixResult[i][j] = avgVector[i];
+        double[][] matrixResult = new double[sizeY][avgVector.length];
+        for (int i = 0; i < sizeY; i++) {
+            for (int j = 0; j < avgVector.length; j++) {
+                matrixResult[i][j] = avgVector[j];
             }
         }
         return matrixResult;

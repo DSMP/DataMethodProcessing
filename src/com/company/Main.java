@@ -26,6 +26,6 @@ public class Main {
         //SFS sfs = new SFS();
         //double[] lol = sfs.calculateSFS(1);
         CovariantMatrixService a = new CovariantMatrixService();
-        double[][] hmmm = a.calcCovMatrix(new double[][]{{1,1},{2,1},{-1,0},{-1,-1}});
+        double[][] hmmm = a.calcCovMatrix(new double[][]{{1,-1},{1,0},{2,-1},{1,-1}});
     }
 }

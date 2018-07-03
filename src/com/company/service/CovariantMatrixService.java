@@ -10,7 +10,7 @@ public class CovariantMatrixService {
     public double[][] calcCovMatrix(final double[][] matrix)
     {
         double[] vectorAvg = fisherMethod.calculateAvgVector(matrix,matrix[0].length);
-        double[][] matrixAvg = makeAvgVectorToMatrix(vectorAvg,matrix[0].length);
+        double[][] matrixAvg = makeAvgVectorToMatrix(vectorAvg,matrix.length);
         double[][] matrixDiff = calcDiffMatrix(matrix, matrixAvg);
         double[][] matrixTrans = makeTransMatrix(matrix);
         double[][] matrixMul = multiply(matrixDiff,matrixTrans);

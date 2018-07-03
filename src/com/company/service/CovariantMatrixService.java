@@ -13,8 +13,8 @@ public class CovariantMatrixService {
         double[][] matrixAvg = makeAvgVectorToMatrix(vectorAvg,matrix.length);
         double[][] matrixDiff = calcDiffMatrix(matrix, matrixAvg);
         double[][] matrixTrans = makeTransMatrix(matrix);
-        double[][] matrixMul = multiply(matrixDiff,matrixTrans);
-        matrixMul = multiply(matrixMul,matrix[0].length);
+        double[][] matrixMul = multiply(matrixDiff, matrixTrans);
+        matrixMul = multiply(matrixMul,1.0/matrix.length);
         return matrixMul;
     }
     private double[][] multiply(double[][] matrix, double scalar)
@@ -67,8 +67,8 @@ public class CovariantMatrixService {
     private double[][] calcDiffMatrix(final double[][] matrixF, final double[][] matrixAvg)
     {
         double[][] matrixResult= new double[matrixF.length][matrixF[0].length];
-        for (int i = 0; i < matrixF.length - 1; i++) {
-            for (int j = 0; j < matrixF[0].length - 1; j++) {
+        for (int i = 0; i < matrixF.length; i++) {
+            for (int j = 0; j < matrixF[0].length; j++) {
                 matrixResult[i][j] = matrixF[i][j] - matrixAvg[i][j];
             }
         }

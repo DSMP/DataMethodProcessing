@@ -56,9 +56,9 @@ public class CovariantMatrixService {
     private double[][] makeAvgVectorToMatrix(final double[] avgVector, final int sizeY)
     {
         double[][] matrixResult = new double[avgVector.length][sizeY];
-        for (int i = 0; i < avgVector.length-1; i++) {
-            for (int j = 0; j < sizeY-1; j++) {
-                matrixResult[i][j] = avgVector[j];
+        for (int i = 0; i < avgVector.length; i++) {
+            for (int j = 0; j < sizeY; j++) {
+                matrixResult[i][j] = avgVector[i];
             }
         }
         return matrixResult;

@@ -2,6 +2,7 @@ package com.company.service;
 
 import com.company.classifiers.NN;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -40,13 +41,26 @@ public class FisherMethod {
     }
 
     //calculate fisher, matrix of features
-    public double calcFisher(double[] uA, double[] uB, double[][] matrixA, double[][] matrixB )
-    {
-        return vectorDiff(uA,uB) / covariantMatrixService.matrixDeterminant(covariantMatrixService.calcCovMatrix(matrixA)) + covariantMatrixService.matrixDeterminant(covariantMatrixService.calcCovMatrix(matrixB));
+    public double calcFisher(double[] uA, double[] uB, double[][] matrixA, double[][] matrixB ) throws InvalidObjectException {
+        return vectorDistance(vectorDiff(uA,uB)) / covariantMatrixService.matrixDeterminant(covariantMatrixService.calcCovMatrix(matrixA)) + covariantMatrixService.matrixDeterminant(covariantMatrixService.calcCovMatrix(matrixB));
     }
 
-    private double vectorDiff(double[] uA, double[] uB) {
-        return nn.calculateTheDistanceForTheSample(uA,uB);
+    private double vectorDistance(double[] vector) {
+        double result = 0.0;
+        for (int i = 0; i < vector.length; i++) {
+            result += Math.pow(vector[i],2);
+        }
+        return Math.sqrt(result);
+    }
+
+    private double[] vectorDiff(double[] uA, double[] uB) throws InvalidObjectException {
+        if (uA.length == uB.length)
+            throw new InvalidObjectException("vector length are not the same");
+        double[] vectorResult = new double[uA.length];
+        for (int i = 0; i < uA.length; i++) {
+            vectorResult[i] = uA[i] - uB[i];
+        }
+        return vectorResult;
     }
 
 

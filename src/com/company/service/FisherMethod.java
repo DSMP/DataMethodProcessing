@@ -1,9 +1,18 @@
 package com.company.service;
 
+import com.company.classifiers.NN;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class FisherMethod {
+    CovariantMatrixService covariantMatrixService;
+    NN nn;
+    public FisherMethod() {
+        covariantMatrixService = new CovariantMatrixService();
+        nn = new NN();
+    }
+
     // policz srednią z wektoru
     public double[] calculateAvgVector(double[][] matrix, int numberOfFeatures) {
         double[] vector = new double[numberOfFeatures];
@@ -29,6 +38,17 @@ public class FisherMethod {
     public double calculateFisher(double avarageA, double avarageB, double sigmaA, double sigmaB) {
         return Math.abs(avarageA - avarageB) / sigmaA + sigmaB;
     }
+
+    //calculate fisher, matrix of features
+    public double calcFisher(double[] uA, double[] uB, double[][] matrixA, double[][] matrixB )
+    {
+        return vectorDiff(uA,uB) / covariantMatrixService.matrixDeterminant(covariantMatrixService.calcCovMatrix(matrixA)) + covariantMatrixService.matrixDeterminant(covariantMatrixService.calcCovMatrix(matrixB));
+    }
+
+    private double vectorDiff(double[] uA, double[] uB) {
+        return nn.calculateTheDistanceForTheSample(uA,uB);
+    }
+
 
     private ArrayList<Integer> selection(ArrayList<Double> fisherValue, int howManyTheBestResults) {
         ArrayList<Integer> i = new ArrayList<>();
@@ -98,6 +118,5 @@ public class FisherMethod {
         for (int i = 0; i < fisherValues.size(); i++) {
             System.out.println((i + 1) + " - wartość: " + fisherValues.get(i));
         }
-
     }
 }

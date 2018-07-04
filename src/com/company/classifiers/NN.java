@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class NN {
-    private double calculateTheDistanceForTheSample(double[] coordinatesOfSample, double[] featureList) {
+    public double calculateTheDistanceForTheSample(double[] coordinatesOfSample, double[] featureList) {
         double result = 0.0;
         for (int i = 0; i < featureList.length; i++) {
             result += Math.pow(featureList[i] - coordinatesOfSample[i], 2);

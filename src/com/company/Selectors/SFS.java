@@ -28,24 +28,50 @@ public class SFS {
         data = fileReaderService.getFeatureModelArrayList();
     }
 
-    public double[] calculateSFS(int featureCount)
+    public double[] calculateSFS(int userCount)
     {
         splitClasses();
         MatrixClass matrixAcer = generateMatrix(dataAcer);
         MatrixClass matrixQuercus = generateMatrix(dataQuercus);
+        double[] vectorBest = new double[64][];
         double[] fisherDataCurrent = new double[0];
+        double[] avgRowsMatrixAcer = fisherMethod.calculateAvgVector(matrixAcer.getMatrix(),64);
+        double[] avgRowsMatrixQuercus = fisherMethod.calculateAvgVector(matrixQuercus.getMatrix(),64);
 
-        for (int i = 0; i < featureCount; i++) {
-            double[] avgRowsMatrixAcer = fisherMethod.calculateAvgVector(matrixAcer.getMatrix(),64);
-            double[] avgRowsMatrixQuercus = fisherMethod.calculateAvgVector(matrixQuercus.getMatrix(),64);
-            fisherDataCurrent = new double[64];
-            for (int j = 0; j < 64; j++) {
-                fisherDataCurrent[j] = fisherMethod.calculateFisher(avgRowsMatrixAcer[j], avgRowsMatrixQuercus[j], fisherMethod.calculateS(matrixAcer.getMatrix()[j],avgRowsMatrixAcer[j]), fisherMethod.calculateS(matrixQuercus.getMatrix()[j],avgRowsMatrixQuercus[j]));
+        fisherDataCurrent = new double[64];
+        int j = 0;
+        for (; j < 64; j++) {
+            fisherDataCurrent[j] = fisherMethod.calculateFisher(avgRowsMatrixAcer[j], avgRowsMatrixQuercus[j], fisherMethod.calculateS(matrixAcer.getMatrix()[j],avgRowsMatrixAcer[j]), fisherMethod.calculateS(matrixQuercus.getMatrix()[j],avgRowsMatrixQuercus[j]));
+        }
+        vectorBest[0] = bestResult(fisherDataCurrent);
+        avgRowsMatrixAcer = rmFeature(avgRowsMatrixAcer, j);
+        avgRowsMatrixQuercus = rmFeature(avgRowsMatrixQuercus, j);
+
+        for (int i = 1; i < userCount; i++) {
+            for (j = 0; j < 64; j++) {
+
             }
         }
-        fisherDataCurrent[0] = bestResult(fisherDataCurrent);
         return fisherDataCurrent;
     }
+
+    private double[] rmFeature(double[] vector, int j) {
+        double[] vectorResult = new double[vector.length - 1];
+        for (int i = 0; i < vectorResult.length; i++) {
+            if (i == j) continue;
+            vectorResult[i] = vector[i];
+        }
+        return vectorResult;
+    }
+
+    private double[] getAvgVector(double[] vectorAvg, int lengthVector, int startPos) {
+        double[] result = new double[lengthVector];
+        for (int i = startPos; i < lengthVector; i++) {
+            result[i] = vectorAvg[i];
+        }
+        return result;
+    }
+
 
     private double bestResult(double[] column)
     {

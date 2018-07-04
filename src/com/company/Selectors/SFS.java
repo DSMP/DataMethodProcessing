@@ -31,37 +31,39 @@ public class SFS {
     public double[] calculateSFS(int userCount)
     {
         splitClasses();
-        MatrixClass matrixAcer = generateMatrix(dataAcer);
-        MatrixClass matrixQuercus = generateMatrix(dataQuercus);
-        double[] vectorBest = new double[64][];
+        double[][] matrixAcer = generateMatrix(dataAcer).getMatrix();
+        double[][] matrixQuercus = generateMatrix(dataQuercus).getMatrix();
+        double[][] bestFeaturesAcer = new double[matrixAcer.length][64];
+        double[][] bestFeaturesQuerqos = new double[matrixQuercus.length][64];
         double[] fisherDataCurrent = new double[0];
-        double[] avgRowsMatrixAcer = fisherMethod.calculateAvgVector(matrixAcer.getMatrix(),64);
-        double[] avgRowsMatrixQuercus = fisherMethod.calculateAvgVector(matrixQuercus.getMatrix(),64);
+        double[] avgRowsMatrixAcer = fisherMethod.calculateAvgVector(matrixAcer,64);
+        double[] avgRowsMatrixQuercus = fisherMethod.calculateAvgVector(matrixQuercus,64);
 
         fisherDataCurrent = new double[64];
-        int j = 0;
-        for (; j < 64; j++) {
-            fisherDataCurrent[j] = fisherMethod.calculateFisher(avgRowsMatrixAcer[j], avgRowsMatrixQuercus[j], fisherMethod.calculateS(matrixAcer.getMatrix()[j],avgRowsMatrixAcer[j]), fisherMethod.calculateS(matrixQuercus.getMatrix()[j],avgRowsMatrixQuercus[j]));
-        }
-        vectorBest[0] = bestResult(fisherDataCurrent);
-        avgRowsMatrixAcer = rmFeature(avgRowsMatrixAcer, j);
-        avgRowsMatrixQuercus = rmFeature(avgRowsMatrixQuercus, j);
 
-        for (int i = 1; i < userCount; i++) {
-            for (j = 0; j < 64; j++) {
-
-            }
+        for (int j = 0; j < 64; j++) {
+            fisherDataCurrent[j] = fisherMethod.calculateFisher(avgRowsMatrixAcer[j], avgRowsMatrixQuercus[j], fisherMethod.calculateS(matrixAcer[j],avgRowsMatrixAcer[j]), fisherMethod.calculateS(matrixQuercus[j],avgRowsMatrixQuercus[j]));
         }
+        int theBestFeature = bestResult(fisherDataCurrent);
+        for (int i = 0; i < bestFeaturesAcer[0].length; i++) {
+            bestFeaturesAcer[i][0] = matrixAcer[i][theBestFeature];
+            bestFeaturesQuerqos[i][0] = matrixQuercus[i][theBestFeature];
+        }
+        matrixAcer = rmFeature(matrixAcer, theBestFeature);
+        matrixQuercus = rmFeature(matrixQuercus, theBestFeature);
+                
         return fisherDataCurrent;
     }
 
-    private double[] rmFeature(double[] vector, int j) {
-        double[] vectorResult = new double[vector.length - 1];
-        for (int i = 0; i < vectorResult.length; i++) {
-            if (i == j) continue;
-            vectorResult[i] = vector[i];
+    private double[][] rmFeature(double[][] matrix, int index) {
+        double[][] matrixresult = new double[matrix.length][matrix[0].length-1];
+        for (int i = 0; i < matrixresult.length; i++) {
+            for (int j = 0; j < matrixresult[0].length; j++) {
+                if (j == index) continue;
+                matrixresult[i][j] = matrix[i][j];
+            }
         }
-        return vectorResult;
+        return matrixresult;
     }
 
     private double[] getAvgVector(double[] vectorAvg, int lengthVector, int startPos) {
@@ -73,16 +75,19 @@ public class SFS {
     }
 
 
-    private double bestResult(double[] column)
+    private int bestResult(double[] column)
     {
         double bestResult = -1;
+        int bestPoz = 0, i = 0;
         for (double result :column) {
             if (result > bestResult)
             {
                 bestResult = result;
+                bestPoz = i;
             }
+            i++;
         }
-        return bestResult;
+        return bestPoz;
     }
 
     private void splitClasses()

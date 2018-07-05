@@ -1,10 +1,10 @@
 package com.company.service;
 
 public class CovariantMatrixService {
-    FisherMethod fisherMethod;
+    VectorService vectorService;
 
     public CovariantMatrixService() {
-        this.fisherMethod = new FisherMethod();
+        this.vectorService = new VectorService();
     }
 
     public double matrixDeterminant (double[][] matrix) {
@@ -40,7 +40,7 @@ public class CovariantMatrixService {
     }
     public double[][] calcCovMatrix(final double[][] matrix)
     {
-        double[] vectorAvg = fisherMethod.calcAvgVector(matrix,matrix[0].length);
+        double[] vectorAvg = vectorService.calcAvgVector(matrix,matrix[0].length);
         double[][] matrixAvg = makeAvgVectorToMatrix(vectorAvg,matrix.length);
         double[][] matrixDiff = calcDiffMatrix(matrix, matrixAvg);
         double[][] matrixTrans = makeTransMatrix(matrix);

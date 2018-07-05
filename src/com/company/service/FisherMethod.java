@@ -64,7 +64,7 @@ public class FisherMethod {
     }
 
     private double[] vectorDiff(double[] uA, double[] uB) throws InvalidObjectException {
-        if (uA.length == uB.length)
+        if (uA.length != uB.length)
             throw new InvalidObjectException("vector length are not the same");
         double[] vectorResult = new double[uA.length];
         for (int i = 0; i < uA.length; i++) {

@@ -23,17 +23,26 @@ public class Main {
 //
 //        nn.testClassNN(fileReaderService.getFeatureModelArrayList());
 
-        //SFS sfs = new SFS();
-        //double[] lol = sfs.calculateSFS(1);
-        CovariantMatrixService a = new CovariantMatrixService();
-        double[][] qwe = new double[][]{{1,-1},{1,0},{2,-1},{1,-1}};
-        for (int i = 0; i < qwe.length; i++) {
-            for (int j = 0; j < qwe[0].length; j++) {
-                System.out.print(qwe[i][j] + " ");
+        SFS sfs = new SFS();
+        double[][] lol = sfs.calculateSFS(2);
+
+        for (int i = 0; i < lol.length; i++) {
+            System.out.print("" + i + " => ");
+            for (int j = 0; j < lol[0].length; j++) {
+                System.out.print(lol[i][j] + " ");
             }
             System.out.println();
         }
-        double[][] hmmm = a.calcCovMatrix(qwe);
-        double res = a.matrixDeterminant(hmmm);
+
+//        CovariantMatrixService a = new CovariantMatrixService();
+//        double[][] qwe = new double[][]{{1,-1},{1,0},{2,-1},{1,-1}};
+//        for (int i = 0; i < qwe.length; i++) {
+//            for (int j = 0; j < qwe[0].length; j++) {
+//                System.out.print(qwe[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
+//        double[][] hmmm = a.calcCovMatrix(qwe);
+//        double res = a.matrixDeterminant(hmmm);
     }
 }

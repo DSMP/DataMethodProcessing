@@ -28,7 +28,7 @@ public class SFS {
         data = fileReaderService.getFeatureModelArrayList();
     }
 
-    public double[] calculateSFS(int userCount)
+    public double[][] calculateSFS(int userCount)
     {
         splitClasses();
         double[][] matrixAcer = generateMatrix(dataAcer).getMatrix();
@@ -38,6 +38,7 @@ public class SFS {
         double[] fisherDataCurrent = new double[0];
         double[] avgRowsMatrixAcer = fisherMethod.calcAvgVector(matrixAcer,64);
         double[] avgRowsMatrixQuercus = fisherMethod.calcAvgVector(matrixQuercus,64);
+        int theBestFeaturesCount = 0;
 
         fisherDataCurrent = new double[64];
 
@@ -45,16 +46,53 @@ public class SFS {
             fisherDataCurrent[j] = fisherMethod.calcFisher(avgRowsMatrixAcer[j], avgRowsMatrixQuercus[j], fisherMethod.calculateS(matrixAcer[j],avgRowsMatrixAcer[j]), fisherMethod.calculateS(matrixQuercus[j],avgRowsMatrixQuercus[j]));
         }
         int theBestFeature = bestResult(fisherDataCurrent);
-        for (int i = 0; i < bestFeaturesAcer[0].length; i++) {
-            bestFeaturesAcer[i][0] = matrixAcer[i][theBestFeature];
-            bestFeaturesQuerqos[i][0] = matrixQuercus[i][theBestFeature];
-        }
+        bestFeaturesAcer = addfeatureToBestFeatures(matrixAcer, bestFeaturesAcer, theBestFeature, theBestFeaturesCount);
+        bestFeaturesQuerqos = addfeatureToBestFeatures(matrixQuercus, bestFeaturesQuerqos, theBestFeature, theBestFeaturesCount);
+        theBestFeaturesCount++;
         matrixAcer = rmFeature(matrixAcer, theBestFeature);
         matrixQuercus = rmFeature(matrixQuercus, theBestFeature);
 
-        
-                
-        return fisherDataCurrent;
+        for (int i = 1; i < userCount; i++) {
+            fisherDataCurrent[63-i] = -1;
+            for (int j = 0; j < matrixAcer[0].length; j++) {
+                bestFeaturesAcer = addfeatureToBestFeatures(matrixAcer, bestFeaturesAcer, j, theBestFeaturesCount);
+                bestFeaturesQuerqos = addfeatureToBestFeatures(matrixQuercus, bestFeaturesQuerqos, j, theBestFeaturesCount);
+                fisherDataCurrent[j] = fisherMethod.calcAutoFisher(bestFeaturesAcer,bestFeaturesQuerqos,matrixAcer,matrixQuercus);
+                bestFeaturesAcer = rmFeature(bestFeaturesAcer, i);
+                bestFeaturesQuerqos = rmFeature(bestFeaturesQuerqos, i);
+                theBestFeature = bestResult(fisherDataCurrent);
+                bestFeaturesAcer = addfeatureToBestFeatures(matrixAcer, bestFeaturesAcer, theBestFeature, theBestFeaturesCount);
+                bestFeaturesQuerqos = addfeatureToBestFeatures(matrixQuercus, bestFeaturesQuerqos, theBestFeature, theBestFeaturesCount);
+                theBestFeaturesCount++;
+                matrixAcer = rmFeature(matrixAcer, theBestFeature);
+                matrixQuercus = rmFeature(matrixQuercus, theBestFeature);
+            }
+
+        }
+        return matrixAddAnotherMatrix(bestFeaturesAcer,bestFeaturesQuerqos);
+    }
+
+    private double[][] matrixAddAnotherMatrix(double[][] matrixA, double[][] matrixB)
+    {
+        double[][] matrixResult = new double[matrixA.length+matrixB.length][matrixA[0].length];
+        for (int i = 0; i < matrixA.length; i++) {
+            for (int j = 0; j < matrixA[0].length; j++) {
+                matrixResult[i][j] = matrixA[i][j];
+            }
+        }
+        for (int i = 0; i < matrixB.length; i++) {
+            for (int j = 0; j < matrixB[0].length; j++) {
+                matrixResult[i][j] = matrixB[i][j];
+            }
+        }
+        return matrixResult;
+    }
+
+    private double[][] addfeatureToBestFeatures(double[][] matrixFeatures, double[][] bestFeatures, int theBestFeature, int theBestFeaturesCount) {
+        for (int i = 0; i < bestFeatures.length; i++) {
+            bestFeatures[i][theBestFeaturesCount] = matrixFeatures[i][theBestFeature];
+        }
+        return bestFeatures;
     }
 
     private double[][] rmFeature(double[][] matrix, int index) {

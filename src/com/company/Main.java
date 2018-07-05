@@ -14,19 +14,27 @@ public class Main {
 
     public static void main(String[] args) {
         FileReaderService fileReaderService = new FileReaderService();
-        FisherMethod fisherMethod = new FisherMethod();
+        //FisherMethod fisherMethod = new FisherMethod();
         NN nn = new NN();
         try {
             fileReaderService.readFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        fisherMethod.testFisher(fileReaderService.getFeatureModelArrayList().get(0).getFeatureMatrix(),
-                fileReaderService.getFeatureModelArrayList().get(44).getFeatureMatrix(), 64, 21);
+        CreateCollections createCollections = new CreateCollections();
+        createCollections.getCollection(fileReaderService.getFeatureModelArrayList());
+        createCollections.createArrayWithRecords();
+        CrossValidationAlgorithm crossValidationAlgorithm = new CrossValidationAlgorithm(
+                createCollections.getArrayList(), 10);
 
-        System.out.println("++++++++Zadanie 2+++++++++++++++++");
+        crossValidationAlgorithm.divideArrayToParts();
+        crossValidationAlgorithm.qualify("KNN");
+//        fisherMethod.testFisher(fileReaderService.getFeatureModelArrayList().get(0).getFeatureMatrix(), fileReaderService.getFeatureModelArrayList().get(44).getFeatureMatrix(), 64, 21);
+//
+//        nn.testClassNN(fileReaderService.getFeatureModelArrayList());
+
         SFS sfs = new SFS();
-        double[][] lol = sfs.calculateSFS(5);
+        double[][] lol = sfs.calculateSFS(2);
 
         for (int i = 0; i < lol.length; i++) {
             System.out.print("" + i + " => ");
@@ -35,24 +43,6 @@ public class Main {
             }
             System.out.println();
         }
-
-        CreateCollections createCollections = new CreateCollections();
-        createCollections.getCollection(fileReaderService.getFeatureModelArrayList());
-        createCollections.createArrayWithRecords();
-
-        nn.testClassNN(fileReaderService.getFeatureModelArrayList());
-
-
-        System.out.println("++++++++Zadanie 4+++++++++++++++++");
-        CrossValidationAlgorithm crossValidationAlgorithm = new CrossValidationAlgorithm(
-                createCollections.getArrayList(), 10);
-
-        crossValidationAlgorithm.divideArrayToParts();
-        crossValidationAlgorithm.qualify("NN");
-
-
-
-
 //        CovariantMatrixService a = new CovariantMatrixService();
 //        double[][] qwe = new double[][]{{1,-1},{1,0},{2,-1},{1,-1}};
 //        for (int i = 0; i < qwe.length; i++) {

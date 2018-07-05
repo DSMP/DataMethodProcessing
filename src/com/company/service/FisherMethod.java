@@ -15,7 +15,7 @@ public class FisherMethod {
     }
 
     // policz srednią z wektoru
-    public double[] calculateAvgVector(double[][] matrix, int numberOfFeatures) {
+    public double[] calcAvgVector(double[][] matrix, int numberOfFeatures) {
         double[] vector = new double[numberOfFeatures];
         for (int i = 0; i < numberOfFeatures; i++) {
             double result = 0;
@@ -36,13 +36,23 @@ public class FisherMethod {
     }
 
     //calculate Fisher, one feature
-    public double calculateFisher(double avarageA, double avarageB, double sigmaA, double sigmaB) {
+    public double calcFisher(double avarageA, double avarageB, double sigmaA, double sigmaB) {
         return Math.abs(avarageA - avarageB) / sigmaA + sigmaB;
     }
 
     //calculate fisher, matrix of features
     public double calcFisher(double[] uA, double[] uB, double[][] matrixA, double[][] matrixB ) throws InvalidObjectException {
         return vectorDistance(vectorDiff(uA,uB)) / covariantMatrixService.matrixDeterminant(covariantMatrixService.calcCovMatrix(matrixA)) + covariantMatrixService.matrixDeterminant(covariantMatrixService.calcCovMatrix(matrixB));
+    }
+
+    public double calcAutoFisher(double[][] uA, double[][] uB, double[][] matrixA, double[][] matrixB)
+    {
+        try {
+            return calcFisher(calcAvgVector(uA,uA[0].length),calcAvgVector(uB,uB[0].length),matrixA,matrixB);
+        } catch (InvalidObjectException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     private double vectorDistance(double[] vector) {
@@ -89,8 +99,8 @@ public class FisherMethod {
     }
 
     public void testFisher(double[][] matrixA, double[][] matrixB, int numberOfFeatures, int howManyTheBestResults) {
-        double[] vectorA = calculateAvgVector(matrixA, numberOfFeatures);
-        double[] vectorB = calculateAvgVector(matrixB, numberOfFeatures);
+        double[] vectorA = calcAvgVector(matrixA, numberOfFeatures);
+        double[] vectorB = calcAvgVector(matrixB, numberOfFeatures);
         ArrayList<Double> sForMatrixA = new ArrayList<>();
         ArrayList<Double> sForMatrixB = new ArrayList<>();
         ArrayList<Double> fisherValues = new ArrayList<>();
@@ -113,8 +123,8 @@ public class FisherMethod {
         System.out.println("++Oblicz Fishera++");
 
         for (int i = 0; i < numberOfFeatures; i++) {
-            //System.out.println("F" + i + ": " + calculateFisher(vectorA[i], vectorB[i], sForMatrixA.get(i), sForMatrixB.get(i)));
-            fisherValues.add(calculateFisher(vectorA[i], vectorB[i], sForMatrixA.get(i), sForMatrixB.get(i)));
+            //System.out.println("F" + i + ": " + calcFisher(vectorA[i], vectorB[i], sForMatrixA.get(i), sForMatrixB.get(i)));
+            fisherValues.add(calcFisher(vectorA[i], vectorB[i], sForMatrixA.get(i), sForMatrixB.get(i)));
         }
         System.out.println();
 

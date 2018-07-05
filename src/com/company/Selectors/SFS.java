@@ -36,13 +36,13 @@ public class SFS {
         double[][] bestFeaturesAcer = new double[matrixAcer.length][64];
         double[][] bestFeaturesQuerqos = new double[matrixQuercus.length][64];
         double[] fisherDataCurrent = new double[0];
-        double[] avgRowsMatrixAcer = fisherMethod.calculateAvgVector(matrixAcer,64);
-        double[] avgRowsMatrixQuercus = fisherMethod.calculateAvgVector(matrixQuercus,64);
+        double[] avgRowsMatrixAcer = fisherMethod.calcAvgVector(matrixAcer,64);
+        double[] avgRowsMatrixQuercus = fisherMethod.calcAvgVector(matrixQuercus,64);
 
         fisherDataCurrent = new double[64];
 
         for (int j = 0; j < 64; j++) {
-            fisherDataCurrent[j] = fisherMethod.calculateFisher(avgRowsMatrixAcer[j], avgRowsMatrixQuercus[j], fisherMethod.calculateS(matrixAcer[j],avgRowsMatrixAcer[j]), fisherMethod.calculateS(matrixQuercus[j],avgRowsMatrixQuercus[j]));
+            fisherDataCurrent[j] = fisherMethod.calcFisher(avgRowsMatrixAcer[j], avgRowsMatrixQuercus[j], fisherMethod.calculateS(matrixAcer[j],avgRowsMatrixAcer[j]), fisherMethod.calculateS(matrixQuercus[j],avgRowsMatrixQuercus[j]));
         }
         int theBestFeature = bestResult(fisherDataCurrent);
         for (int i = 0; i < bestFeaturesAcer[0].length; i++) {
@@ -51,6 +51,8 @@ public class SFS {
         }
         matrixAcer = rmFeature(matrixAcer, theBestFeature);
         matrixQuercus = rmFeature(matrixQuercus, theBestFeature);
+
+        
                 
         return fisherDataCurrent;
     }

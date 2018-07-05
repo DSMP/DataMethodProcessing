@@ -1,6 +1,7 @@
 package com.company.classifiers;
 
 import com.company.model.DataToTask3Model;
+import org.ejml.simple.SimpleMatrix;
 
 import java.util.ArrayList;
 import java.util.Random;

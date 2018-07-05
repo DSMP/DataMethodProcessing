@@ -1,12 +1,14 @@
 package com.company.model;
 
+import org.ejml.simple.SimpleMatrix;
+
 import java.util.ArrayList;
 
 public class NMmodel {
     private String featureName;
-    private ArrayList<NNmodel>  vector;
+    private SimpleMatrix vector;
 
-    public NMmodel(String featureName, ArrayList<NNmodel> vector) {
+    public NMmodel(String featureName, SimpleMatrix vector) {
         this.featureName = featureName;
         this.vector = vector;
     }
@@ -19,11 +21,11 @@ public class NMmodel {
         this.featureName = featureName;
     }
 
-    public ArrayList<NNmodel> getVector() {
+    public SimpleMatrix getVector() {
         return vector;
     }
 
-    public void setVector(ArrayList<NNmodel> vector) {
+    public void setVector(SimpleMatrix vector) {
         this.vector = vector;
     }
 }

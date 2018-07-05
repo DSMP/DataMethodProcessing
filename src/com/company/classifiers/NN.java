@@ -9,6 +9,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class NN {
+    private float procent;
+
+    public float getProcent() {
+        return procent;
+    }
+
+    public void setProcent(float procent) {
+        this.procent = procent;
+    }
+
     public double calculateTheDistanceForTheSample(double[] coordinatesOfSample, double[] featureList) {
         double result = 0.0;
         for (int i = 0; i < featureList.length; i++) {
@@ -80,7 +90,7 @@ public class NN {
         nm.testNM(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
 }
 
-    private void testNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
+    public void testNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();
@@ -104,10 +114,11 @@ public class NN {
         Integer a = trueArray.size();
         Integer b = array.size();
         float procent = a.floatValue() / b.floatValue();
+        setProcent(procent);
         System.out.println("Wynik dla NN: " + procent * 100 + "%");
     }
 
-    private void testKNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest, int n) {
+    public void testKNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest, int n) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();
@@ -131,6 +142,7 @@ public class NN {
         Integer a = trueArray.size();
         Integer b = array.size();
         float procent = a.floatValue() / b.floatValue();
+        setProcent(procent);
         System.out.println("Wynik dla k-NN, gdzie k = " + n + " : " + procent * 100 + "%");
     }
 }

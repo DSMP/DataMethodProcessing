@@ -1,7 +1,6 @@
 package com.company.classifiers;
 
 import com.company.model.DataToTask3Model;
-import com.company.model.NNmodel;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -36,12 +35,10 @@ public class CrossValidationAlgorithm {
     }
 
     public void qualify(String selector) {
-        ArrayList<NNmodel> distancesSamples = new ArrayList<>();
-        ArrayList<Boolean> trueArray = new ArrayList<>();
-        ArrayList<Boolean> array = new ArrayList<>();
         ArrayList<DataToTask3Model> arrayListTraining = new ArrayList<>();
         ArrayList<DataToTask3Model> arrayListTest = new ArrayList<>();
         NN nn = new NN();
+        double proc = 0.0;
         int arraySize = arrayListWithParts.size();
         for (int i = 0; i < arraySize; i++) {
             ArrayList<ArrayList<DataToTask3Model>> arrayList = new ArrayList<>(arrayListWithParts);
@@ -58,6 +55,8 @@ public class CrossValidationAlgorithm {
                     nn.testKNN(arrayListTest, arrayListTraining, 3);
                     break;
             }
+            proc += nn.getProcent();
         }
+        System.out.println("Result for all tests: " + proc / arraySize * 100 + "%");
     }
 }

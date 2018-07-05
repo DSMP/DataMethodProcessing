@@ -9,6 +9,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class NN {
+    private float procent;
+
+    public float getProcent() {
+        return procent;
+    }
+
+    public void setProcent(float procent) {
+        this.procent = procent;
+    }
+
     public double calculateTheDistanceForTheSample(double[] coordinatesOfSample, double[] featureList) {
         double result = 0.0;
         for (int i = 0; i < featureList.length; i++) {
@@ -104,6 +114,7 @@ public class NN {
         Integer a = trueArray.size();
         Integer b = array.size();
         float procent = a.floatValue() / b.floatValue();
+        setProcent(procent);
         System.out.println("Wynik dla NN: " + procent * 100 + "%");
     }
 
@@ -131,6 +142,7 @@ public class NN {
         Integer a = trueArray.size();
         Integer b = array.size();
         float procent = a.floatValue() / b.floatValue();
+        setProcent(procent);
         System.out.println("Wynik dla k-NN, gdzie k = " + n + " : " + procent * 100 + "%");
     }
 }

@@ -57,16 +57,17 @@ public class SFS {
             for (int j = 0; j < matrixAcer[0].length; j++) {
                 bestFeaturesAcer = addfeatureToBestFeatures(matrixAcer, bestFeaturesAcer, j, theBestFeaturesCount);
                 bestFeaturesQuerqos = addfeatureToBestFeatures(matrixQuercus, bestFeaturesQuerqos, j, theBestFeaturesCount);
-                fisherDataCurrent[j] = fisherMethod.calcAutoFisher(bestFeaturesAcer,bestFeaturesQuerqos,matrixAcer,matrixQuercus);
+                fisherDataCurrent[j] = fisherMethod.calcAutoFisher(makeRealMatrix(bestFeaturesAcer,i+1),makeRealMatrix(bestFeaturesQuerqos, i+1)
+                        ,makeRealMatrix(bestFeaturesAcer,i+1),makeRealMatrix(bestFeaturesQuerqos, i+1));
                 bestFeaturesAcer = rmFeature(bestFeaturesAcer, i);
                 bestFeaturesQuerqos = rmFeature(bestFeaturesQuerqos, i);
-                theBestFeature = bestResult(fisherDataCurrent);
-                bestFeaturesAcer = addfeatureToBestFeatures(matrixAcer, bestFeaturesAcer, theBestFeature, theBestFeaturesCount);
-                bestFeaturesQuerqos = addfeatureToBestFeatures(matrixQuercus, bestFeaturesQuerqos, theBestFeature, theBestFeaturesCount);
-                theBestFeaturesCount++;
-                matrixAcer = rmFeature(matrixAcer, theBestFeature);
-                matrixQuercus = rmFeature(matrixQuercus, theBestFeature);
             }
+            theBestFeature = bestResult(fisherDataCurrent);
+            bestFeaturesAcer = addfeatureToBestFeatures(matrixAcer, bestFeaturesAcer, theBestFeature, theBestFeaturesCount);
+            bestFeaturesQuerqos = addfeatureToBestFeatures(matrixQuercus, bestFeaturesQuerqos, theBestFeature, theBestFeaturesCount);
+            theBestFeaturesCount++;
+            matrixAcer = rmFeature(matrixAcer, theBestFeature);
+            matrixQuercus = rmFeature(matrixQuercus, theBestFeature);
 
         }
         return matrixAddAnotherMatrix(bestFeaturesAcer,bestFeaturesQuerqos);
@@ -82,17 +83,23 @@ public class SFS {
         }
         for (int i = 0; i < matrixB.length; i++) {
             for (int j = 0; j < matrixB[0].length; j++) {
-                matrixResult[i][j] = matrixB[i][j];
+                matrixResult[matrixA.length+i][j] = matrixB[i][j];
             }
         }
         return matrixResult;
     }
 
     private double[][] addfeatureToBestFeatures(double[][] matrixFeatures, double[][] bestFeatures, int theBestFeature, int theBestFeaturesCount) {
+        double[][] matrixResultFeatures = new double[matrixFeatures.length][theBestFeaturesCount+1];
         for (int i = 0; i < bestFeatures.length; i++) {
-            bestFeatures[i][theBestFeaturesCount] = matrixFeatures[i][theBestFeature];
+            for (int j = 0; j < theBestFeaturesCount; j++) {
+                matrixResultFeatures[i][j] = bestFeatures[i][j];
+            }
         }
-        return bestFeatures;
+        for (int i = 0; i < bestFeatures.length; i++) {
+            matrixResultFeatures[i][theBestFeaturesCount] = matrixFeatures[i][theBestFeature];
+        }
+        return matrixResultFeatures;
     }
 
     private double[][] rmFeature(double[][] matrix, int index) {
@@ -120,6 +127,10 @@ public class SFS {
         double bestResult = -1;
         int bestPoz = 0, i = 0;
         for (double result :column) {
+            if (Double.isInfinite(result))
+            {
+                continue;
+            }
             if (result > bestResult)
             {
                 bestResult = result;
@@ -158,4 +169,16 @@ public class SFS {
         MatrixClass matrixClass = new MatrixClass(resultMatrixData, ii, resultMatrixData[0].length);
         return matrixClass;
     }
+
+    private double[][] makeRealMatrix(final double[][] matrix, int countColumns)
+    {
+        double[][] matrixResult = new double[matrix.length][countColumns];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < countColumns; j++) {
+                matrixResult[i][j] = matrix[i][j];
+            }
+        }
+        return matrixResult;
+    }
+
 }

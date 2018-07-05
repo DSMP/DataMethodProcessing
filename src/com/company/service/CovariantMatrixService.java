@@ -32,13 +32,14 @@ public class CovariantMatrixService {
                     }
                 }
             }
-//            System.out.println(counter++ + " ==> " + matrix.length + " " + result);
+            System.out.println(counter++ + " ==> " + matrix.length + " " + result);
             result += matrix[0][i] * Math.pow (-1, (double) i) * matrixDeterminant (temporary);
         }
         return result;
     }
-    public double[][] calcCovMatrix(final double[][] matrix)
+    public double[][] calcCovMatrix(double[][] matrix)
     {
+        matrix = makeTransMatrix(matrix);
         double[] vectorAvg = vectorService.calcAvgVector(matrix,matrix[0].length);
         double[][] matrixAvg = makeAvgVectorToMatrix(vectorAvg,matrix.length);
         double[][] matrixDiff = calcDiffMatrix(matrix, matrixAvg);

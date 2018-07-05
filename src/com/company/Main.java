@@ -34,7 +34,7 @@ public class Main {
 //        nn.testClassNN(fileReaderService.getFeatureModelArrayList());
 
         SFS sfs = new SFS();
-        double[][] lol = sfs.calculateSFS(2);
+        double[][] lol = sfs.calculateSFS(5);
 
         for (int i = 0; i < lol.length; i++) {
             System.out.print("" + i + " => ");

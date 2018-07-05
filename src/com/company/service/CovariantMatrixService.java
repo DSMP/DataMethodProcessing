@@ -2,6 +2,7 @@ package com.company.service;
 
 public class CovariantMatrixService {
     VectorService vectorService;
+    static int counter =0;
 
     public CovariantMatrixService() {
         this.vectorService = new VectorService();
@@ -13,14 +14,12 @@ public class CovariantMatrixService {
 
         if (matrix.length == 1) {
             result = matrix[0][0];
-            return (result);
+            return result;
         }
-
         if (matrix.length == 2) {
             result = ((matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]));
-            return (result);
+            return result;
         }
-
         for (int i = 0; i < matrix[0].length; i++) {
             temporary = new double[matrix.length - 1][matrix[0].length - 1];
 
@@ -33,10 +32,10 @@ public class CovariantMatrixService {
                     }
                 }
             }
-
+//            System.out.println(counter++ + " ==> " + matrix.length + " " + result);
             result += matrix[0][i] * Math.pow (-1, (double) i) * matrixDeterminant (temporary);
         }
-        return (result);
+        return result;
     }
     public double[][] calcCovMatrix(final double[][] matrix)
     {

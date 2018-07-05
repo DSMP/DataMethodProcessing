@@ -28,10 +28,11 @@ public class Main {
                 createCollections.getArrayList(), 10);
 
         crossValidationAlgorithm.divideArrayToParts();
-        crossValidationAlgorithm.qualify("KNN");
+        crossValidationAlgorithm.qualify("NM");
 //        fisherMethod.testFisher(fileReaderService.getFeatureModelArrayList().get(0).getFeatureMatrix(), fileReaderService.getFeatureModelArrayList().get(44).getFeatureMatrix(), 64, 21);
 //
 //        nn.testClassNN(fileReaderService.getFeatureModelArrayList());
+
 
         SFS sfs = new SFS();
         double[][] lol = sfs.calculateSFS(5);

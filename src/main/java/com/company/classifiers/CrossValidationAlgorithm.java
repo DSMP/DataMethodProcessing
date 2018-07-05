@@ -1,6 +1,7 @@
 package com.company.classifiers;
 
 import com.company.model.DataToTask3Model;
+import org.ejml.simple.SimpleMatrix;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,6 +39,7 @@ public class CrossValidationAlgorithm {
         ArrayList<DataToTask3Model> arrayListTraining = new ArrayList<>();
         ArrayList<DataToTask3Model> arrayListTest = new ArrayList<>();
         NN nn = new NN();
+        NM nm = new NM();
         double proc = 0.0;
         int arraySize = arrayListWithParts.size();
         for (int i = 0; i < arraySize; i++) {
@@ -50,12 +52,18 @@ public class CrossValidationAlgorithm {
             switch (selector) {
                 case "NN":
                     nn.testNN(arrayListTest, arrayListTraining);
+                    proc += nn.getProcent();
                     break;
                 case "KNN":
                     nn.testKNN(arrayListTest, arrayListTraining, 3);
+                    proc += nn.getProcent();
+                    break;
+                case "NM":
+                    nm.testNM(arrayListTest, arrayListTraining);
+                    proc += nm.getProcent();
                     break;
             }
-            proc += nn.getProcent();
+
         }
         System.out.println("Result for all tests: " + proc / arraySize * 100 + "%");
     }

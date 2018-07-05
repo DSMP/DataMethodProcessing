@@ -13,7 +13,7 @@ public class FileReaderService {
     public void readFile() throws IOException {
         String lastRowName = null;
         boolean firstLine = true;
-        BufferedReader br = new BufferedReader(new FileReader("src\\Maple_Oak.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("src\\main\\java\\Maple_Oak.txt"));
         try {
             String line = null;
             int j = 0;

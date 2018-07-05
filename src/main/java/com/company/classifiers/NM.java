@@ -58,4 +58,8 @@ public class NM {
         float procent = a.floatValue() / b.floatValue();
         System.out.println("Wynik dla NM: " + procent * 100 + "%");
     }
+
+    public double getProcent() {
+        return 0;
+    }
 }

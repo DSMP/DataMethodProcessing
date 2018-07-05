@@ -80,7 +80,7 @@ public class NN {
         nm.testNM(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
 }
 
-    private void testNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
+    public void testNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();
@@ -107,7 +107,7 @@ public class NN {
         System.out.println("Wynik dla NN: " + procent * 100 + "%");
     }
 
-    private void testKNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest, int n) {
+    public void testKNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest, int n) {
         ArrayList<NNmodel> distancesSamples = new ArrayList<>();
         ArrayList<Boolean> trueArray = new ArrayList<>();
         ArrayList<Boolean> array = new ArrayList<>();

@@ -46,6 +46,7 @@ public class SFS {
             fisherDataCurrent[j] = fisherMethod.calcFisher(avgRowsMatrixAcer[j], avgRowsMatrixQuercus[j], fisherMethod.calculateS(matrixAcer[j],avgRowsMatrixAcer[j]), fisherMethod.calculateS(matrixQuercus[j],avgRowsMatrixQuercus[j]));
         }
         int theBestFeature = bestResult(fisherDataCurrent);
+        System.out.println(theBestFeature);
         bestFeaturesAcer = addfeatureToBestFeatures(matrixAcer, bestFeaturesAcer, theBestFeature, theBestFeaturesCount);
         bestFeaturesQuerqos = addfeatureToBestFeatures(matrixQuercus, bestFeaturesQuerqos, theBestFeature, theBestFeaturesCount);
         theBestFeaturesCount++;
@@ -63,6 +64,7 @@ public class SFS {
                 bestFeaturesQuerqos = rmFeature(bestFeaturesQuerqos, i);
             }
             theBestFeature = bestResult(fisherDataCurrent);
+            System.out.println(theBestFeature);
             bestFeaturesAcer = addfeatureToBestFeatures(matrixAcer, bestFeaturesAcer, theBestFeature, theBestFeaturesCount);
             bestFeaturesQuerqos = addfeatureToBestFeatures(matrixQuercus, bestFeaturesQuerqos, theBestFeature, theBestFeaturesCount);
             theBestFeaturesCount++;
@@ -127,6 +129,7 @@ public class SFS {
         double bestResult = -1;
         int bestPoz = 0, i = 0;
         for (double result :column) {
+            System.out.print(i + " " + result + " ");
             if (Double.isInfinite(result))
             {
                 continue;

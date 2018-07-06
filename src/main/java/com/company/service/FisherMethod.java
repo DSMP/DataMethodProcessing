@@ -54,6 +54,16 @@ public class FisherMethod {
             return -1;
         }
     }
+    public double[][] sumTwoMatrix(double[][] matrixA, double[][] matrixB) throws InvalidObjectException {
+        if (matrixA.length != matrixB.length || matrixA[0].length != matrixB[0].length)
+            throw new InvalidObjectException("Matrix lengths are not the same");
+        for (int i = 0; i < matrixA.length; i++) {
+            for (int j = 0; j < matrixA[0].length; j++) {
+                matrixA[i][j] += matrixB[i][j];
+            }
+        }
+        return matrixA;
+    }
 
     private double vectorDistance(double[] vector) {
         double result = 0.0;

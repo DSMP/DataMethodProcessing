@@ -26,15 +26,15 @@ public class Main {
 
         System.out.println("++++++++Zadanie 2+++++++++++++++++");
         SFS sfs = new SFS();
-        double[][] lol = sfs.calculateSFS(5);
+        double[][] lol = sfs.calculateSFS(3);
 
-        for (int i = 0; i < lol.length; i++) {
-            System.out.print("" + i + " => ");
-            for (int j = 0; j < lol[0].length; j++) {
-                System.out.print(lol[i][j] + " ");
-            }
-            System.out.println();
-        }
+//        for (int i = 0; i < lol.length; i++) {
+//            System.out.print("" + i + " => ");
+//            for (int j = 0; j < lol[0].length; j++) {
+//                System.out.print(lol[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
 
         CreateCollections createCollections = new CreateCollections();
         createCollections.getCollection(fileReaderService.getFeatureModelArrayList());

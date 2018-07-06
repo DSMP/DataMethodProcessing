@@ -32,7 +32,7 @@ public class CovariantMatrixService {
                     }
                 }
             }
-            System.out.println(counter++ + " ==> " + matrix.length + " " + result);
+//            System.out.println(counter++ + " ==> " + matrix.length + " " + result);
             result += matrix[0][i] * Math.pow (-1, (double) i) * matrixDeterminant (temporary);
         }
         return result;

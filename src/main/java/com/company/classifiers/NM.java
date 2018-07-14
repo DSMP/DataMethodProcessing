@@ -91,6 +91,16 @@ public class NM {
                 }
             });
         }
+        double percentage = 0.0;
+        int goodClasifing =0;
+        for (int i = 0; i < testObjects.size(); i++) {
+            if (testObjects.get(i).getFeatureName().equals(testObjects.get(i).getFeatureNameOld()))
+            {
+                goodClasifing++;
+            }
+        }
+        percentage = (goodClasifing*100)/testObjects.size();
+        System.out.println(percentage);
     }
 
     private NMAvgModelExt classify(ArrayList<NMAvgModel> vectorTraining, NMmodel objectTest)

@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class NMmodel {
     private String featureName;
-    private SimpleMatrix vector;
+    private double[] vector;
 
-    public NMmodel(String featureName, SimpleMatrix vector) {
+    public NMmodel(String featureName, double[] vector) {
         this.featureName = featureName;
         this.vector = vector;
     }
@@ -21,11 +21,11 @@ public class NMmodel {
         this.featureName = featureName;
     }
 
-    public SimpleMatrix getVector() {
+    public double[] getVector() {
         return vector;
     }
 
-    public void setVector(SimpleMatrix vector) {
+    public void setVector(double[] vector) {
         this.vector = vector;
     }
 }

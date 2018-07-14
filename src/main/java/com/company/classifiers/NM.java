@@ -77,12 +77,32 @@ public class NM {
         return new SimpleMatrix(matrix);
     }
 
-    public void validateNM(ArrayList<FeatureModel> arrayListTraining, ArrayList<FeatureModel> arrayListTest)
+    public void validateNM(ArrayList<FeatureModel> arrayListTraining, ArrayList<NMmodel> arrayListTest)
     {
-        ArrayList<NMAvgModel> vectorAvgs = calcVectorAvgs(arrayListTraining);
+        ArrayList<NMAvgModel> vectorAvgsTrening = calcVectorfeaturesAvgs(arrayListTraining);
     }
 
-    private ArrayList<NMAvgModel> calcVectorAvgs(ArrayList<FeatureModel> nModels) {
+    private NMAvgModelExt cliassify(ArrayList<NMAvgModel> vectorTraining, NMmodel objectTest)
+    {
+        FisherMethod fisherMethod = new FisherMethod();
+        double objectTestAvg = fisherMethod.vectorDistance(objectTest.getVector());
+        NMAvgModelExt nmAvgModelExt = new NMAvgModelExt(objectTest.getFeatureName(),null, objectTestAvg);
+        double theMinestAvg = Math.abs(vectorTraining.get(0).getAvgFeature() - objectTestAvg);
+        int classIndex = 0;
+        double tempMinAvg = 0.0;
+        for (int i = 1; i < vectorTraining.size(); i++) {
+            tempMinAvg = Math.abs(vectorTraining.get(i).getAvgFeature()-objectTestAvg);
+            if (tempMinAvg < theMinestAvg)
+            {
+                theMinestAvg = tempMinAvg;
+                classIndex = i;
+            }
+        }
+        nmAvgModelExt.setFeatureName(vectorTraining.get(classIndex).getFeatureName());
+        return nmAvgModelExt;
+    }
+
+    private ArrayList<NMAvgModel> calcVectorfeaturesAvgs(ArrayList<FeatureModel> nModels) {
 
         ArrayList<NMAvgModel> result = new ArrayList<>();
         FisherMethod fisherMethod = new FisherMethod();

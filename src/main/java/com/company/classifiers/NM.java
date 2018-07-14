@@ -79,10 +79,21 @@ public class NM {
 
     public void validateNM(ArrayList<FeatureModel> arrayListTraining, ArrayList<NMmodel> arrayListTest)
     {
+        ArrayList<NMAvgModelExt> testObjects = new ArrayList<>();
         ArrayList<NMAvgModel> vectorAvgsTrening = calcVectorfeaturesAvgs(arrayListTraining);
+        for (int i = 0; i < arrayListTest.size(); i++) {
+            NMAvgModelExt newClassifiedObject = classify(vectorAvgsTrening,arrayListTest.get(i));
+            testObjects.add(newClassifiedObject);
+            vectorAvgsTrening.forEach(nmAvgModel ->
+            {
+                if (nmAvgModel.getFeatureName().equals(newClassifiedObject.getFeatureName())) {
+                    nmAvgModel.setAvgFeature((nmAvgModel.getAvgFeature()+newClassifiedObject.getAvgFeature())/2);
+                }
+            });
+        }
     }
 
-    private NMAvgModelExt cliassify(ArrayList<NMAvgModel> vectorTraining, NMmodel objectTest)
+    private NMAvgModelExt classify(ArrayList<NMAvgModel> vectorTraining, NMmodel objectTest)
     {
         FisherMethod fisherMethod = new FisherMethod();
         double objectTestAvg = fisherMethod.vectorDistance(objectTest.getVector());

@@ -65,7 +65,7 @@ public class FisherMethod {
         return matrixA;
     }
 
-    private double vectorDistance(double[] vector) {
+    public double vectorDistance(double[] vector) {
         double result = 0.0;
         for (int i = 0; i < vector.length; i++) {
             result += Math.pow(vector[i],2);

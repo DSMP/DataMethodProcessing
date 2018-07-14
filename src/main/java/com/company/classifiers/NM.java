@@ -1,8 +1,7 @@
 package com.company.classifiers;
 
-import com.company.model.DataToTask3Model;
-import com.company.model.NMmodel;
-import com.company.model.NNmodel;
+import com.company.model.*;
+import com.company.service.FisherMethod;
 import org.ejml.simple.SimpleMatrix;
 
 import java.util.ArrayList;
@@ -78,6 +77,22 @@ public class NM {
         return new SimpleMatrix(matrix);
     }
 
+    public void validateNM(ArrayList<FeatureModel> arrayListTraining, ArrayList<FeatureModel> arrayListTest)
+    {
+        ArrayList<NMAvgModel> vectorAvgs = calcVectorAvgs(arrayListTraining);
+    }
+
+    private ArrayList<NMAvgModel> calcVectorAvgs(ArrayList<FeatureModel> nModels) {
+
+        ArrayList<NMAvgModel> result = new ArrayList<>();
+        NN nn = new NN();
+        FisherMethod fisherMethod = new FisherMethod();
+        for (int i = 0; i < nModels.size(); i++) {
+            result.add(new NMAvgModel(nModels.get(i).getFeatureName(), fisherMethod.vectorDistance(calcAvgVector(nModels.get(i).getFeatureMatrix())));
+        }
+        return result;
+    }
+
     public void testNM(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
         ArrayList<DataToTask3Model> distancesSamples = new ArrayList<>();
         ArrayList<NMmodel> gggg = new ArrayList<>();
@@ -120,10 +135,25 @@ public class NM {
 //            distancesSamples.clear();
 //        }
 
+
         Integer a = trueArray.size();
         Integer b = array.size();
         float procent = a.floatValue() / b.floatValue();
         setProcent(procent);
         System.out.println("Wynik dla NM: " + procent * 100 + "%");
+    }
+
+
+
+    private double[] calcAvgVector(double[][] matrixF)
+    {
+        double[] vectorResult = new double[matrixF[0].length];
+        for (int i = 0; i < matrixF[0].length; i++) {
+            for (int j = 0; j < matrixF.length; j++) {
+                vectorResult[i] += matrixF[j][i];
+            }
+            vectorResult[i] /= matrixF.length;
+        }
+        return vectorResult;
     }
 }

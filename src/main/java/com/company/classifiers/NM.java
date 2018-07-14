@@ -85,7 +85,6 @@ public class NM {
     private ArrayList<NMAvgModel> calcVectorAvgs(ArrayList<FeatureModel> nModels) {
 
         ArrayList<NMAvgModel> result = new ArrayList<>();
-        NN nn = new NN();
         FisherMethod fisherMethod = new FisherMethod();
         for (int i = 0; i < nModels.size(); i++) {
             result.add(new NMAvgModel(nModels.get(i).getFeatureName(), fisherMethod.vectorDistance(calcAvgVector(nModels.get(i).getFeatureMatrix())));

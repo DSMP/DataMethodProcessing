@@ -76,7 +76,7 @@ public class NM {
         }
         return new SimpleMatrix(matrix);
     }
-
+    // arrayListTraining - zbór obiektow sklasyfikowanych, arrayListTest = zbior nie skalsyfikowanych, ale z wiadomą informacją do ktorej klasy należy
     public void validateNM(ArrayList<FeatureModel> arrayListTraining, ArrayList<NMmodel> arrayListTest)
     {
         ArrayList<NMAvgModelExt> testObjects = new ArrayList<>();

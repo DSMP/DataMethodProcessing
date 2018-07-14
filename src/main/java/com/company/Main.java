@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.Selectors.SFS;
 import com.company.classifiers.CrossValidationAlgorithm;
+import com.company.classifiers.NM;
 import com.company.classifiers.NN;
 import com.company.service.CovariantMatrixService;
 import com.company.service.CreateCollections;
@@ -49,7 +50,6 @@ public class Main {
 
         crossValidationAlgorithm.divideArrayToParts();
         crossValidationAlgorithm.qualify("NN");
-
 
 
 

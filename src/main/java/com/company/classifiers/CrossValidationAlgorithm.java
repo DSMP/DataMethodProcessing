@@ -59,7 +59,7 @@ public class CrossValidationAlgorithm {
                     proc += nn.getProcent();
                     break;
                 case "NM":
-                    nm.testNM(arrayListTest, arrayListTraining);
+//                    nm.testNM(arrayListTest, arrayListTraining);
                     proc += nm.getProcent();
                     break;
             }

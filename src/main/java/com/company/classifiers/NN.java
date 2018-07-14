@@ -87,7 +87,7 @@ public class NN {
         createCollections.createArrayWithRecordsTest();
         testNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
         testKNN(createCollections.getArrayListTraining(), createCollections.getArrayListTest(), 4);
-        nm.testNM(createCollections.getArrayListTraining(), createCollections.getArrayListTest());
+        //nm.testNM(createCollections.getArrayListTraining(), createCollections.getArrayListTest()); <-- check this out
 }
 
     public void testNN(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {

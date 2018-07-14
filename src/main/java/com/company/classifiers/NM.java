@@ -128,37 +128,37 @@ public class NM {
         ArrayList<NMAvgModel> result = new ArrayList<>();
         FisherMethod fisherMethod = new FisherMethod();
         for (int i = 0; i < nModels.size(); i++) {
-            result.add(new NMAvgModel(nModels.get(i).getFeatureName(), fisherMethod.vectorDistance(calcAvgVector(nModels.get(i).getFeatureMatrix())));
+            result.add(new NMAvgModel(nModels.get(i).getFeatureName(), fisherMethod.vectorDistance(calcAvgVector(nModels.get(i).getFeatureMatrix()))));
         }
         return result;
     }
 
-    public void testNM(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
-        ArrayList<DataToTask3Model> distancesSamples = new ArrayList<>();
-        ArrayList<NMmodel> gggg = new ArrayList<>();
-
-        ArrayList<Boolean> trueArray = new ArrayList<>();
-        ArrayList<Boolean> array = new ArrayList<>();
-        Set<String> featureNamesInArray = getNames(arrayListTest);
-
-        Object[] names = featureNamesInArray.toArray();
-
-        for (int i = 0; i < names.length; i++) {
-            ArrayList<DataToTask3Model> arr = new ArrayList<>();
-            for (int j = 0; j < arrayListTest.size(); j++) {
-                if (names[i] == arrayListTest.get(j).getFeatureName()) {
-                    arr.add(arrayListTest.get(i));
-                }
-            }
-            gggg.add(new NMmodel(arr.get(0).getFeatureName(), convertToSimpleMatrix(arr)));
-            double[][] matrix = new double[arr.size()][64];
-            for (int j = 0; j < arr.size(); j++) {
-                matrix[j] = arr.get(j).getFeatureMatrix();
-                distancesSamples.add(new DataToTask3Model(arr.get(j).getFeatureName(), calculateVector(gggg.get(gggg.size() - 1).getVector())));
-            }
-        }
-
-        System.out.println(calculateVector(gggg.get(0).getVector()));
+//    public void testNM(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
+//        ArrayList<DataToTask3Model> distancesSamples = new ArrayList<>();
+//        ArrayList<NMmodel> gggg = new ArrayList<>();
+//
+//        ArrayList<Boolean> trueArray = new ArrayList<>();
+//        ArrayList<Boolean> array = new ArrayList<>();
+//        Set<String> featureNamesInArray = getNames(arrayListTest);
+//
+//        Object[] names = featureNamesInArray.toArray();
+//
+//        for (int i = 0; i < names.length; i++) {
+//            ArrayList<DataToTask3Model> arr = new ArrayList<>();
+//            for (int j = 0; j < arrayListTest.size(); j++) {
+//                if (names[i] == arrayListTest.get(j).getFeatureName()) {
+//                    arr.add(arrayListTest.get(i));
+//                }
+//            }
+//            gggg.add(new NMmodel(arr.get(0).getFeatureName(), convertToSimpleMatrix(arr)));
+//            double[][] matrix = new double[arr.size()][64];
+//            for (int j = 0; j < arr.size(); j++) {
+//                matrix[j] = arr.get(j).getFeatureMatrix();
+//                distancesSamples.add(new DataToTask3Model(arr.get(j).getFeatureName(), calculateVector(gggg.get(gggg.size() - 1).getVector())));
+//            }
+//        }
+//
+//        System.out.println(calculateVector(gggg.get(0).getVector()));
 
 //        for (int i = 0; i < gggg.size() - 1; i++) {
 //            for (int j = 0; j < arrayListTest.size() - 1; j++) {
@@ -174,15 +174,15 @@ public class NM {
 //            }
 //            distancesSamples.clear();
 //        }
-
-
-        Integer a = trueArray.size();
-        Integer b = array.size();
-        float procent = a.floatValue() / b.floatValue();
-        setProcent(procent);
-        System.out.println("Wynik dla NM: " + procent * 100 + "%");
-    }
-
+//
+//
+//        Integer a = trueArray.size();
+//        Integer b = array.size();
+//        float procent = a.floatValue() / b.floatValue();
+//        setProcent(procent);
+//        System.out.println("Wynik dla NM: " + procent * 100 + "%");
+//    }
+//
 
 
     private double[] calcAvgVector(double[][] matrixF)

@@ -77,7 +77,7 @@ public class NM {
         return new SimpleMatrix(matrix);
     }
     // arrayListTraining - zbór obiektow sklasyfikowanych, arrayListTest = zbior nie skalsyfikowanych, ale z wiadomą informacją do ktorej klasy należy
-    public void validateNM(ArrayList<FeatureModel> arrayListTraining, ArrayList<NMmodel> arrayListTest)
+    public void validateNM(ArrayList<FeatureModel> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest)
     {
         ArrayList<NMAvgModelExt> testObjects = new ArrayList<>();
         ArrayList<NMAvgModel> vectorAvgsTrening = calcVectorfeaturesAvgs(arrayListTraining);
@@ -103,10 +103,10 @@ public class NM {
         System.out.println(percentage);
     }
 
-    private NMAvgModelExt classify(ArrayList<NMAvgModel> vectorTraining, NMmodel objectTest)
+    private NMAvgModelExt classify(ArrayList<NMAvgModel> vectorTraining, DataToTask3Model objectTest)
     {
         FisherMethod fisherMethod = new FisherMethod();
-        double objectTestAvg = fisherMethod.vectorDistance(objectTest.getVector());
+        double objectTestAvg = fisherMethod.vectorDistance(objectTest.getFeatureMatrix());
         NMAvgModelExt nmAvgModelExt = new NMAvgModelExt(objectTest.getFeatureName(),null, objectTestAvg);
         double theMinestAvg = Math.abs(vectorTraining.get(0).getAvgFeature() - objectTestAvg);
         int classIndex = 0;

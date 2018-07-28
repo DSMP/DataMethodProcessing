@@ -2,14 +2,14 @@ package com.company.model;
 
 public class DataToTask3Model {
     private String featureName;
-    private double[] featureMatrix;
+    private double[] featureList;
 
     public DataToTask3Model() {
     }
 
     public DataToTask3Model(String featureName, double[] featureMatrix) {
         this.featureName = featureName;
-        this.featureMatrix = featureMatrix;
+        this.featureList = featureMatrix;
     }
 
     public String getFeatureName() {
@@ -20,11 +20,11 @@ public class DataToTask3Model {
         this.featureName = featureName;
     }
 
-    public double[] getFeatureMatrix() {
-        return featureMatrix;
+    public double[] getFeatureList() {
+        return featureList;
     }
 
-    public void setFeatureMatrix(double[] featureMatrix) {
-        this.featureMatrix = featureMatrix;
+    public void setFeatureList(double[] featureList) {
+        this.featureList = featureList;
     }
 }

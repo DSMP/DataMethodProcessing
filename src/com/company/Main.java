@@ -29,7 +29,7 @@ public class Main {
 
         crossValidationAlgorithm.divideArrayToParts();
         crossValidationAlgorithm.qualify("KNN");
-//        fisherMethod.testFisher(fileReaderService.getFeatureModelArrayList().get(0).getFeatureMatrix(), fileReaderService.getFeatureModelArrayList().get(44).getFeatureMatrix(), 64, 21);
+//        fisherMethod.testFisher(fileReaderService.getFeatureModelArrayList().get(0).getFeatureList(), fileReaderService.getFeatureModelArrayList().get(44).getFeatureList(), 64, 21);
 //
 //        nn.testClassNN(fileReaderService.getFeatureModelArrayList());
 

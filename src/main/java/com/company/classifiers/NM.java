@@ -72,7 +72,7 @@ public class NM {
     public SimpleMatrix convertToSimpleMatrix(ArrayList<DataToTask3Model> arrayListWithRecords) {
         double[][] matrix = new double[arrayListWithRecords.size()][];
         for (int i = 0; i < arrayListWithRecords.size(); i++) {
-            matrix[i] = arrayListWithRecords.get(i).getFeatureMatrix();
+            matrix[i] = arrayListWithRecords.get(i).getFeatureList();
         }
         return new SimpleMatrix(matrix);
     }
@@ -99,14 +99,15 @@ public class NM {
                 goodClasifing++;
             }
         }
-        percentage = (goodClasifing*100)/testObjects.size();
-        System.out.println(percentage);
+        percentage = (goodClasifing*100.0)/testObjects.size();
+        procent = Float.parseFloat("" + percentage);
+        System.out.println("NM result (%): " + percentage);
     }
 
     private NMAvgModelExt classify(ArrayList<NMAvgModel> vectorTraining, DataToTask3Model objectTest)
     {
         FisherMethod fisherMethod = new FisherMethod();
-        double objectTestAvg = fisherMethod.vectorDistance(objectTest.getFeatureMatrix());
+        double objectTestAvg = fisherMethod.vectorDistance(objectTest.getFeatureList());
         NMAvgModelExt nmAvgModelExt = new NMAvgModelExt(objectTest.getFeatureName(),null, objectTestAvg);
         double theMinestAvg = Math.abs(vectorTraining.get(0).getAvgFeature() - objectTestAvg);
         int classIndex = 0;
@@ -153,7 +154,7 @@ public class NM {
 //            gggg.add(new NMmodel(arr.get(0).getFeatureName(), convertToSimpleMatrix(arr)));
 //            double[][] matrix = new double[arr.size()][64];
 //            for (int j = 0; j < arr.size(); j++) {
-//                matrix[j] = arr.get(j).getFeatureMatrix();
+//                matrix[j] = arr.get(j).getFeatureList();
 //                distancesSamples.add(new DataToTask3Model(arr.get(j).getFeatureName(), calculateVector(gggg.get(gggg.size() - 1).getVector())));
 //            }
 //        }
@@ -162,8 +163,8 @@ public class NM {
 
 //        for (int i = 0; i < gggg.size() - 1; i++) {
 //            for (int j = 0; j < arrayListTest.size() - 1; j++) {
-//                double distance = calculateTheDistanceForTheSample(arrayListTraining.get(i).getFeatureMatrix(),
-//                        arrayListTest.get(j).getFeatureMatrix());
+//                double distance = calculateTheDistanceForTheSample(arrayListTraining.get(i).getFeatureList(),
+//                        arrayListTest.get(j).getFeatureList());
 //                distancesSamples.add(new NNmodel(distance, arrayListTest.get(j).getFeatureName()));
 //            }
 //            if (sampleSelectionForTheClassNM(distancesSamples).equals(arrayListTraining.get(i).getFeatureName())) {

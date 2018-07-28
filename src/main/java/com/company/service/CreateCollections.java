@@ -81,7 +81,7 @@ public class CreateCollections {
 
             for (int j = 0; j < matrix.length; j++) {
                 m.setFeatureName(randomElement.getFeatureName());
-                m.setFeatureMatrix(matrix[j]);
+                m.setFeatureList(matrix[j]);
                 testArrayList.add(m);
             }
 
@@ -102,7 +102,7 @@ public class CreateCollections {
 
             for (int j = 0; j < matrix1.length; j++) {
                 m.setFeatureName(randomElement.getFeatureName());
-                m.setFeatureMatrix(matrix1[j]);
+                m.setFeatureList(matrix1[j]);
                 trainingArrayList.add(m);
             }
             trainingCollection.add(randomElement);

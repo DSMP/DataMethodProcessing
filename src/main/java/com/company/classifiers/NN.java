@@ -97,8 +97,8 @@ public class NN {
         for (int i = 0; i < arrayListTraining.size() - 1; i++) {
             for (int j = 0; j < arrayListTest.size() - 1; j++) {
                 double distance = calculateTheDistanceForTheSample(
-                        arrayListTraining.get(i).getFeatureMatrix(),
-                        arrayListTest.get(j).getFeatureMatrix());
+                        arrayListTraining.get(i).getFeatureList(),
+                        arrayListTest.get(j).getFeatureList());
                 distancesSamples.add(new NNmodel(distance, arrayListTest.get(j).getFeatureName()));
             }
 
@@ -125,8 +125,8 @@ public class NN {
         for (int i = 0; i < arrayListTraining.size() - 1; i++) {
             for (int j = 0; j < arrayListTest.size() - 1; j++) {
                 double distance = calculateTheDistanceForTheSample(
-                        arrayListTraining.get(i).getFeatureMatrix(),
-                        arrayListTest.get(j).getFeatureMatrix());
+                        arrayListTraining.get(i).getFeatureList(),
+                        arrayListTest.get(j).getFeatureList());
                 distancesSamples.add(new NNmodel(distance, arrayListTest.get(j).getFeatureName()));
             }
 

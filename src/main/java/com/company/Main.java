@@ -46,7 +46,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AdapterNM nmAdapter = new AdapterNM(fileReaderService.getFeatureModelArrayList());
+        AdapterNM nmAdapter = new AdapterNM(fileReaderService.getFeatureModelArrayList(), 10);
         nm.validateNM(nmAdapter.getTrainingList(),nmAdapter.getTestList());
         System.out.println("NM result: " + nm.getProcent());
 

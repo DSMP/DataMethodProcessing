@@ -12,11 +12,11 @@ public class AdapterNM {
     boolean isOutputPrepared = false;
     int mod;
 
-    public AdapterNM(ArrayList<FeatureModel> allData) {
+    public AdapterNM(ArrayList<FeatureModel> allDatam, int mod) {
         arrayListTraining = new ArrayList<>();
         arrayListTest = new ArrayList<>();
         this.allData = allData;
-        mod = 10;
+        this.mod = mod;
     }
 
     public ArrayList<FeatureModel> getTrainingList()

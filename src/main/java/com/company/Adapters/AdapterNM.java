@@ -10,32 +10,34 @@ public class AdapterNM {
     ArrayList<FeatureModel> arrayListTraining;
     ArrayList<DataToTask3Model> arrayListTest;
     boolean isOutputPrepared = false;
+    int mod;
 
     public AdapterNM(ArrayList<FeatureModel> allData) {
         arrayListTraining = new ArrayList<>();
         arrayListTest = new ArrayList<>();
         this.allData = allData;
+        mod = 10;
     }
 
     public ArrayList<FeatureModel> getTrainingList()
     {
-        preparedOutput();
+        preparedOutput(mod);
         return arrayListTraining;
     }
 
     public ArrayList<DataToTask3Model> getTestList() {
-        preparedOutput();
+        preparedOutput(mod);
         return arrayListTest;
     }
 
-    private void preparedOutput()
+    private void preparedOutput(int mod)
     {
         if (isOutputPrepared) return;
         for (FeatureModel featureModel: allData) {
             int index = 0;
-            double[][] featureDataOut = new double[featureModel.getFeatureMatrix().length-(featureModel.getFeatureMatrix().length/5)][64];
+            double[][] featureDataOut = new double[featureModel.getFeatureMatrix().length-(featureModel.getFeatureMatrix().length/mod)][64];
             for (int i = 0; i < featureModel.getFeatureMatrix().length; i++) {
-                if ((i % 5) == 0)
+                if ((i % mod) == 0)
                     arrayListTest.add(new DataToTask3Model(featureModel.getFeatureName(),featureModel.getFeatureMatrix()[i]));
                 else
                 {

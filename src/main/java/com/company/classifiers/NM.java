@@ -87,7 +87,7 @@ public class NM {
             vectorAvgsTrening.forEach(nmAvgModel ->
             {
                 if (nmAvgModel.getFeatureName().equals(newClassifiedObject.getFeatureName())) {
-                    nmAvgModel.setAvgFeature((nmAvgModel.getAvgFeature()+newClassifiedObject.getAvgFeature())/2);
+                    nmAvgModel.setCenterPointfeature(calcCenterClass(nmAvgModel.getCenterPointfeature(),newClassifiedObject.getCenterPointfeature()));
                 }
             });
         }
@@ -106,14 +106,12 @@ public class NM {
 
     private NMAvgModelExt classify(ArrayList<NMAvgModel> vectorTraining, DataToTask3Model objectTest)
     {
-        FisherMethod fisherMethod = new FisherMethod();
-        double objectTestAvg = fisherMethod.vectorDistance(objectTest.getFeatureList());
-        NMAvgModelExt nmAvgModelExt = new NMAvgModelExt(objectTest.getFeatureName(),null, objectTestAvg);
-        double theMinestAvg = Math.abs(vectorTraining.get(0).getAvgFeature() - objectTestAvg);
+        NMAvgModelExt nmAvgModelExt = new NMAvgModelExt(objectTest.getFeatureName(),null, objectTest.getFeatureList());
+        double theMinestAvg = distanceBetweenPoints(vectorTraining.get(0).getCenterPointfeature(), objectTest.getFeatureList());
         int classIndex = 0;
         double tempMinAvg = 0.0;
         for (int i = 1; i < vectorTraining.size(); i++) {
-            tempMinAvg = Math.abs(vectorTraining.get(i).getAvgFeature()-objectTestAvg);
+            tempMinAvg = distanceBetweenPoints(vectorTraining.get(i).getCenterPointfeature(),objectTest.getFeatureList());
             if (tempMinAvg < theMinestAvg)
             {
                 theMinestAvg = tempMinAvg;
@@ -124,14 +122,40 @@ public class NM {
         return nmAvgModelExt;
     }
 
-    private ArrayList<NMAvgModel> calcVectorfeaturesAvgs(ArrayList<FeatureModel> nModels) {
+    public double distanceBetweenPoints(double[] pointA, double[] pointB)
+    {
+        double result = 0.0;
+        for (int i = 0; i < pointA.length; i++) {
+            result += Math.pow(pointB[i]-pointA[i],2);
+        }
+        return Math.sqrt(result);
+    }
 
+    private ArrayList<NMAvgModel> calcVectorfeaturesAvgs(ArrayList<FeatureModel> nModels)
+    {
         ArrayList<NMAvgModel> result = new ArrayList<>();
-        FisherMethod fisherMethod = new FisherMethod();
         for (int i = 0; i < nModels.size(); i++) {
-            result.add(new NMAvgModel(nModels.get(i).getFeatureName(), fisherMethod.vectorDistance(calcAvgVector(nModels.get(i).getFeatureMatrix()))));
+            result.add(new NMAvgModel(nModels.get(i).getFeatureName(), calcAvgPoint(nModels.get(i).getFeatureMatrix())));
         }
         return result;
+    }
+
+    private double[] calcAvgPoint(double[][] feature) {
+        double[] avgPoint = new double[feature[0].length];
+        for (int i = 0; i < feature[0].length; i++) {
+            avgPoint[i] = feature[0][i];
+        }
+        for (int i = 1; i < feature.length; i++) {
+            calcCenterClass(feature[i], avgPoint);
+        }
+        return avgPoint;
+    }
+
+    private double[] calcCenterClass(double[] doubles, double[] avgPoint) {
+        for (int j = 0; j < doubles.length; j++) {
+            avgPoint[j] = Math.abs(avgPoint[j]- doubles[j]);
+        }
+        return avgPoint;
     }
 
 //    public void testNM(ArrayList<DataToTask3Model> arrayListTraining, ArrayList<DataToTask3Model> arrayListTest) {
@@ -184,8 +208,7 @@ public class NM {
 //        System.out.println("Wynik dla NM: " + procent * 100 + "%");
 //    }
 //
-
-
+    //srednia z cech, srednia z kolumn
     private double[] calcAvgVector(double[][] matrixF)
     {
         double[] vectorResult = new double[matrixF[0].length];
@@ -197,4 +220,5 @@ public class NM {
         }
         return vectorResult;
     }
+
 }

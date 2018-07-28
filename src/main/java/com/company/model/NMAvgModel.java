@@ -2,11 +2,11 @@ package com.company.model;
 
 public class NMAvgModel {
     private String featureName;
-    private double avgFeature;
+    private double[] centerPointfeature;
 
-    public NMAvgModel(String featureName, double avgFeature) {
+    public NMAvgModel(String featureName, double[] avgFeature) {
         this.featureName = featureName;
-        this.avgFeature = avgFeature;
+        this.centerPointfeature = avgFeature;
     }
 
     public String getFeatureName() {
@@ -18,11 +18,11 @@ public class NMAvgModel {
         this.featureName = featureName;
     }
 
-    public double getAvgFeature() {
-        return avgFeature;
+    public double[] getCenterPointfeature() {
+        return centerPointfeature;
     }
 
-    public void setAvgFeature(double avgFeature) {
-        this.avgFeature = avgFeature;
+    public void setCenterPointfeature(double[] centerPointfeature) {
+        this.centerPointfeature = centerPointfeature;
     }
 }

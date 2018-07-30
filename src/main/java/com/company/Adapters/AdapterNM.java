@@ -15,7 +15,7 @@ public class AdapterNM {
     public AdapterNM(ArrayList<FeatureModel> allDatam, int mod) {
         arrayListTraining = new ArrayList<>();
         arrayListTest = new ArrayList<>();
-        this.allData = allData;
+        this.allData = allDatam;
         this.mod = mod;
     }
 
